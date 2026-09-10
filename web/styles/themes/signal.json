@@ -1,0 +1,16 @@
+{
+  "key": "signal",
+  "name": "Signal",
+  "archetype": "The performance coach",
+  "bestFor": ["Fitness and sport", "Sales floors", "Anything with a scoreboard"],
+  "defaultMode": "light",
+  "accent": { "l": 0.55, "c": 0.20, "h": 252 },
+  "neutral": { "h": 254, "c": 0.008 },
+  "fonts": {
+    "display": "Archivo",
+    "body": "Schibsted Grotesk",
+    "mono": "IBM Plex Mono"
+  },
+  "structure": { "radiusScale": 0.5, "density": 1.0, "typeRatio": 1.25, "elevation": "border" },
+  "notes": "Broadcast graphics package. Hard 2px ink borders instead of shadows; rectangular cards against fully-round controls."
+}

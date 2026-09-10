@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en" data-theme="kiln" data-mode="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Four Directions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Karla:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="../web/styles/tokens.css">
+<link rel="stylesheet" href="../web/styles/themes.css">
+<link rel="stylesheet" href="../web/styles/components.css">
+<link rel="stylesheet" href="harness.css">
+<style>
+  .ix { max-width: 940px; margin: 0 auto; padding: var(--space-7) var(--space-4) var(--space-8); }
+  .ix__lede { max-width: 62ch; color: var(--text-secondary); margin-top: var(--space-3); }
+  .ix__list { display: flex; flex-direction: column; gap: var(--space-4); margin-top: var(--space-6); }
+  .ix__row { display: grid; grid-template-columns: 8rem minmax(0,1fr) auto; gap: var(--space-4); align-items: start; }
+  @media (max-width: 700px) { .ix__row { grid-template-columns: minmax(0,1fr); } }
+  .ix__name { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--text-md); }
+  .ix__for { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; }
+  .ix__what { font-size: var(--text-sm); color: var(--text-secondary); line-height: var(--leading-relaxed); }
+  .ix__what strong { color: var(--text-primary); font-weight: var(--weight-semi); }
+</style>
+</head>
+<body>
+<div id="harness" data-page="index" data-chips="false"></div>
+
+<main class="ix">
+  <h1 style="font-size:var(--text-2xl)">Four directions</h1>
+  <p class="ix__lede">
+    A <strong>direction</strong> owns layout, component anatomy and the information model — it
+    ships as code. A <strong>theme</strong> owns colour, type and spacing — it is data an owner
+    edits. Kiln, Hearth and Grove are three themes of one direction. The three below are
+    different directions: different structures, not different paint. Every one of them still
+    reads the same brand tokens, so every one is still whitelabel.
+  </p>
+
+  <div class="ix__list">
+    <div class="ix__row">
+      <div>
+        <div class="ix__name">Kiln</div>
+        <div class="ix__for">Default</div>
+      </div>
+      <div class="ix__what">
+        <strong>App shell.</strong> Sidebar, card feed, right rail. The format members already
+        know from every other community product. Safe, legible, unsurprising — and the reason
+        it is the default.
+      </div>
+      <div class="row" style="gap:var(--space-2)">
+        <a class="btn btn--secondary" href="themes.html">App</a>
+        <a class="btn btn--secondary" href="landing.html">Landing</a>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="ix__row">
+      <div>
+        <div class="ix__name">Broadsheet</div>
+        <div class="ix__for">Writing-led</div>
+      </div>
+      <div class="ix__what">
+        <strong>A publication.</strong> No cards at all. Masthead, 12-column asymmetric grid,
+        lead story with a drop cap, briefs, letters, a pull quote. Hierarchy comes from column
+        width and position, so the host's announcement can actually outrank a reply — which a
+        uniform feed can never express.
+      </div>
+      <div><a class="btn btn--primary" href="broadsheet.html">Open</a></div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="ix__row">
+      <div>
+        <div class="ix__name">Console</div>
+        <div class="ix__for">Operators</div>
+      </div>
+      <div class="ix__what">
+        <strong>A queue.</strong> Fixed split pane, one-line rows, a filter query instead of
+        categories, a persistent detail pane instead of navigation, and a status bar of
+        keyboard shortcuts. Nothing scrolls infinitely. You work it to zero and leave.
+      </div>
+      <div><a class="btn btn--primary" href="console.html">Open</a></div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="ix__row">
+      <div>
+        <div class="ix__name">Studio</div>
+        <div class="ix__for">Media-led</div>
+      </div>
+      <div class="ix__what">
+        <strong>A broadcast.</strong> Full-bleed hero for the next live call, then horizontal
+        rails rather than a vertical feed — five categories in one screen instead of one
+        category five times. Discussion is demoted to a rail, because for these cohorts it is
+        genuinely the secondary product.
+      </div>
+      <div><a class="btn btn--primary" href="studio.html">Open</a></div>
+    </div>
+  </div>
+</main>
+
+<script src="harness.js"></script>
+</body>
+</html>

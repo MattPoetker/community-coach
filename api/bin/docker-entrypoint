@@ -1,0 +1,9 @@
+#!/bin/bash -e
+
+# Migrations run on boot under a Postgres advisory lock, so a multi-replica deploy cannot
+# race two migrators against each other.
+if [ "${*}" == "bundle exec puma -b tcp://0.0.0.0:3000" ]; then
+  ./bin/rails db:prepare
+fi
+
+exec "${@}"

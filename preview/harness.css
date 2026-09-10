@@ -1,0 +1,72 @@
+/* ---------------------------------------------------------------------------
+   Preview harness chrome. Deliberately NOT themed — it keeps its own fixed
+   palette so the evaluation tool is always distinguishable from the product it
+   frames. Nothing here ships; it lives in preview/ and never in web/.
+   ------------------------------------------------------------------------- */
+.hz-bar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  padding: 10px 16px;
+  background: #14161a; color: #e8eaed;
+  border-bottom: 1px solid #2c3038;
+  font: 500 13px/1.4 ui-sans-serif, system-ui, sans-serif;
+}
+.hz-bar__brand { font-weight: 700; letter-spacing: -0.01em; }
+.hz-bar__brand span { color: #8b919b; font-weight: 400; }
+.hz-group { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.hz-group__label {
+  font-size: 10px; text-transform: uppercase; letter-spacing: 0.09em;
+  color: #6c727c; margin-right: 2px;
+}
+.hz-chip {
+  appearance: none; border: 1px solid #2c3038; background: #1c1f25; color: #b7bdc7;
+  padding: 6px 11px; border-radius: 6px; cursor: pointer; font: inherit;
+  display: flex; flex-direction: column; align-items: flex-start; line-height: 1.25;
+}
+.hz-chip:hover { border-color: #454b56; color: #e8eaed; }
+.hz-chip[aria-pressed="true"] { background: #e8eaed; color: #14161a; border-color: #e8eaed; }
+.hz-chip[data-control="true"] { border-color: #4b5563; }
+.hz-chip small { font-size: 10px; opacity: 0.65; font-weight: 400; }
+.hz-chip[aria-pressed="true"] small { opacity: 0.7; }
+.hz-divider { width: 1px; align-self: stretch; background: #2c3038; margin: 0 4px; }
+.hz-spacer { flex: 1 1 auto; }
+.hz-btn {
+  appearance: none; border: 1px solid #2c3038; background: #1c1f25; color: #b7bdc7;
+  padding: 7px 12px; border-radius: 6px; cursor: pointer; font: inherit;
+  text-decoration: none; display: inline-block;
+}
+.hz-btn:hover { border-color: #454b56; color: #e8eaed; }
+.hz-btn[aria-pressed="true"], .hz-btn[aria-current="page"] { background: #e8eaed; color: #14161a; }
+.hz-bar :focus-visible, .hz-editor :focus-visible { outline: 2px solid #7aa2ff; outline-offset: 2px; }
+
+.hz-editor {
+  background: #1c1f25; color: #b7bdc7; border-bottom: 1px solid #2c3038;
+  padding: 14px 16px; font: 400 12px/1.5 ui-sans-serif, system-ui, sans-serif;
+}
+.hz-editor[hidden] { display: none; }
+.hz-editor__grid {
+  display: grid; gap: 14px 22px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  max-width: 1200px;
+}
+.hz-field { display: flex; flex-direction: column; gap: 5px; }
+.hz-field label { color: #8b919b; text-transform: uppercase; letter-spacing: 0.07em; font-size: 10px; }
+.hz-field output { color: #e8eaed; font-variant-numeric: tabular-nums; font-size: 11px; }
+.hz-field input[type="range"] { width: 100%; accent-color: #7aa2ff; }
+.hz-field select {
+  background: #14161a; color: #e8eaed; border: 1px solid #2c3038;
+  border-radius: 5px; padding: 5px 7px; font: inherit;
+}
+.hz-editor__note { max-width: 62ch; margin: 12px 0 0; color: #8b919b; }
+.hz-editor__note code { color: #b7bdc7; }
+
+/* Section framing — harness, kept minimal so the product reads clean. */
+.hz-section { padding: 40px 16px; }
+.hz-section + .hz-section { border-top: 1px dashed var(--border-subtle); }
+.hz-section__head { max-width: 1200px; margin: 0 auto 24px; }
+.hz-section__eyebrow {
+  font: 600 11px/1 ui-sans-serif, system-ui, sans-serif;
+  text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+.hz-shell { max-width: 1200px; margin: 0 auto; }

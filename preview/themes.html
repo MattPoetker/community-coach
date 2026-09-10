@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en" data-theme="kiln">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Community Coach — Theme Evaluation</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Epilogue:wght@400;500;600;700&family=Figtree:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Instrument+Serif&family=Karla:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap">
+
+<link rel="stylesheet" href="../web/styles/tokens.css">
+<link rel="stylesheet" href="../web/styles/themes.css">
+<link rel="stylesheet" href="../web/styles/components.css">
+<link rel="stylesheet" href="harness.css">
+
+<style>
+/* Layout for the mock product screens. The harness chrome itself lives in
+   harness.css, shared with the landing-page preview. */
+.screen { display: grid; gap: var(--space-5); grid-template-columns: 220px minmax(0, 1fr) 260px; align-items: start; }
+@media (max-width: 1000px) { .screen { grid-template-columns: minmax(0, 1fr); } .screen__rail, .screen__side { order: 2; } }
+.identity { margin-bottom: var(--space-4); }
+.grid--courses { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.grid--plans { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); align-items: start; }
+.specimen { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+</style>
+</head>
+<body>
+
+<div id="harness" data-page="app"></div>
+
+<!-- ══ 1. Community feed ══════════════════════════════════════════════════ -->
+<section class="hz-section">
+  <div class="hz-section__head">
+    <div class="hz-section__eyebrow">Screen 01</div>
+    <h1>Community</h1>
+  </div>
+  <div class="hz-shell">
+    <div class="screen">
+
+      <aside class="screen__side">
+        <div class="identity">
+          <div class="identity__mark">MC</div>
+          <div>
+            <div class="identity__name">Momentum Collective</div>
+            <div class="u-meta">1,284 members</div>
+          </div>
+        </div>
+        <nav class="nav" aria-label="Community sections">
+          <a class="nav-item" href="#" aria-current="page">Community <span class="nav-item__count">12</span></a>
+          <a class="nav-item" href="#">Classroom <span class="nav-item__count">6</span></a>
+          <a class="nav-item" href="#">Calendar <span class="nav-item__count">3</span></a>
+          <a class="nav-item" href="#">Members</a>
+          <a class="nav-item" href="#">About</a>
+        </nav>
+        <hr class="divider" style="margin: var(--space-4) 0">
+        <div class="u-label" style="margin-bottom: var(--space-2)">Categories</div>
+        <nav class="nav" aria-label="Categories">
+          <a class="nav-item" href="#">Announcements <span class="nav-item__count">4</span></a>
+          <a class="nav-item" href="#">Wins <span class="nav-item__count">38</span></a>
+          <a class="nav-item" href="#">Ask the Room <span class="nav-item__count">91</span></a>
+          <a class="nav-item" href="#">Accountability <span class="nav-item__count">27</span></a>
+          <a class="nav-item" href="#">Resources <span class="nav-item__count">15</span></a>
+        </nav>
+      </aside>
+
+      <main class="stack">
+        <div class="card">
+          <div class="row">
+            <div class="avatar" aria-hidden="true">DR</div>
+            <input class="input" id="composer" placeholder="Share a win, or ask the room something…">
+          </div>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="Feed sort">
+          <button class="tab" role="tab" aria-selected="true">Recent</button>
+          <button class="tab" role="tab" aria-selected="false">Unanswered</button>
+          <button class="tab" role="tab" aria-selected="false">Top this week</button>
+        </div>
+
+        <article class="card post post--pinned">
+          <div class="row">
+            <div class="avatar" aria-hidden="true">SK</div>
+            <div>
+              <div style="font-weight: var(--weight-semi); font-size: var(--text-sm)">Sara Kowalczyk</div>
+              <div class="u-meta">Announcements · Pinned · 2h</div>
+            </div>
+            <div class="spacer"></div>
+            <span class="badge badge--accent">Host</span>
+          </div>
+          <div>
+            <h3 class="post__title">October cohort: hot seats open Thursday</h3>
+            <p class="post__body">
+              Six slots, first come. Bring a live pricing problem — an actual proposal you have
+              not sent yet, not a hypothetical. Last round we rewrote four scopes on the call and
+              three of them closed inside a fortnight.
+            </p>
+          </div>
+          <div class="post__footer">
+            <button class="post__action">▲ 47</button>
+            <button class="post__action">Reply · 23</button>
+            <div class="spacer"></div>
+            <div class="avatar-stack" aria-label="23 people replied">
+              <span class="avatar avatar--sm" aria-hidden="true">JT</span>
+              <span class="avatar avatar--sm" aria-hidden="true">MO</span>
+              <span class="avatar avatar--sm" aria-hidden="true">RB</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card post">
+          <div class="row">
+            <div class="avatar" aria-hidden="true">JT</div>
+            <div>
+              <div style="font-weight: var(--weight-semi); font-size: var(--text-sm)">James Toweel</div>
+              <div class="u-meta">Wins · 5h</div>
+            </div>
+            <div class="spacer"></div>
+            <span class="badge badge--success">First retainer</span>
+          </div>
+          <div>
+            <h3 class="post__title">Signed at £4,200/mo after eighteen months of day rates</h3>
+            <p class="post__body">
+              The thing that moved it was dropping the hourly line entirely from the proposal.
+              I sent three scoped outcomes with one price and said nothing about days. They picked
+              the middle one in a day and a half.
+            </p>
+          </div>
+          <div class="post__footer">
+            <button class="post__action">▲ 128</button>
+            <button class="post__action">Reply · 41</button>
+          </div>
+        </article>
+
+        <article class="card post">
+          <div class="row">
+            <div class="avatar" aria-hidden="true">MO</div>
+            <div>
+              <div style="font-weight: var(--weight-semi); font-size: var(--text-sm)">Mira Okonkwo</div>
+              <div class="u-meta">Ask the Room · 1d</div>
+            </div>
+            <div class="spacer"></div>
+            <span class="badge badge--warning">Needs a reply</span>
+          </div>
+          <div>
+            <h3 class="post__title">Client wants to move from retainer back to project work</h3>
+            <p class="post__body">
+              Nine months in, new procurement lead, wants everything itemised. Do I hold the line
+              or take the project and rebuild the retainer later?
+            </p>
+          </div>
+          <div class="post__footer">
+            <button class="post__action">▲ 12</button>
+            <button class="post__action">Reply · 6</button>
+          </div>
+        </article>
+      </main>
+
+      <aside class="screen__rail stack">
+        <div class="card">
+          <div class="u-label">Next live call</div>
+          <div class="row">
+            <div class="event-date">
+              <div class="event-date__day">16</div>
+              <div class="event-date__mon">Sep</div>
+            </div>
+            <div>
+              <div style="font-weight: var(--weight-semi); font-size: var(--text-sm)">Pricing hot seats</div>
+              <div class="u-meta">18:00 BST · 60 min</div>
+            </div>
+          </div>
+          <button class="btn btn--primary btn--block">Reserve a seat</button>
+        </div>
+        <div class="card">
+          <div class="u-label">Your progress</div>
+          <div class="row row--between">
+            <span style="font-size: var(--text-sm)">The Positioning Sprint</span>
+            <span class="u-meta">4 / 9</span>
+          </div>
+          <div class="progress"><div class="progress__bar" style="width: 44%"></div></div>
+          <button class="btn btn--secondary btn--block">Resume lesson 5</button>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ 2. Classroom ═══════════════════════════════════════════════════════ -->
+<section class="hz-section">
+  <div class="hz-section__head">
+    <div class="hz-section__eyebrow">Screen 02</div>
+    <h1>Classroom</h1>
+  </div>
+  <div class="hz-shell stack">
+    <div class="grid grid--courses">
+      <article class="card card--flush">
+        <div class="course-cover">The Positioning Sprint</div>
+        <div class="stack" style="padding: var(--card-padding); gap: var(--space-2)">
+          <div class="row row--between">
+            <span class="u-meta">9 lessons · 2h 40m</span>
+            <span class="badge badge--accent">In progress</span>
+          </div>
+          <div class="progress"><div class="progress__bar" style="width: 44%"></div></div>
+        </div>
+      </article>
+      <article class="card card--flush">
+        <div class="course-cover">Pricing Without Flinching</div>
+        <div class="stack" style="padding: var(--card-padding); gap: var(--space-2)">
+          <div class="row row--between">
+            <span class="u-meta">12 lessons · 3h 05m</span>
+            <span class="badge badge--success">Complete</span>
+          </div>
+          <div class="progress"><div class="progress__bar" style="width: 100%"></div></div>
+        </div>
+      </article>
+      <article class="card card--flush">
+        <div class="course-cover">Your First Retainer</div>
+        <div class="stack" style="padding: var(--card-padding); gap: var(--space-2)">
+          <div class="row row--between">
+            <span class="u-meta">7 lessons · 1h 50m</span>
+            <span class="badge">Unlocks day 30</span>
+          </div>
+          <div class="progress"><div class="progress__bar" style="width: 0%"></div></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="card">
+      <div class="row row--between">
+        <h3>The Positioning Sprint · Module 2</h3>
+        <span class="u-meta">4 of 9 complete</span>
+      </div>
+      <hr class="divider">
+      <div>
+        <div class="lesson-row lesson-row--done">
+          <span class="lesson-row__mark" aria-hidden="true">✓</span>
+          <div style="font-size: var(--text-sm)">Who you are not for</div>
+          <div class="spacer"></div><span class="u-meta">14:20</span>
+        </div>
+        <div class="lesson-row lesson-row--done">
+          <span class="lesson-row__mark" aria-hidden="true">✓</span>
+          <div style="font-size: var(--text-sm)">Auditing your last ten enquiries</div>
+          <div class="spacer"></div><span class="u-meta">22:05</span>
+        </div>
+        <div class="lesson-row">
+          <span class="lesson-row__mark" aria-hidden="true"></span>
+          <div style="font-size: var(--text-sm); font-weight: var(--weight-semi)">Writing the one-line answer</div>
+          <div class="spacer"></div><span class="badge badge--accent">Next</span>
+        </div>
+        <div class="lesson-row lesson-row--locked">
+          <span class="lesson-row__mark" aria-hidden="true"></span>
+          <div style="font-size: var(--text-sm)">Testing it on a stranger</div>
+          <div class="spacer"></div><span class="u-meta">Inner Circle</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 3. Calendar ════════════════════════════════════════════════════════ -->
+<section class="hz-section">
+  <div class="hz-section__head">
+    <div class="hz-section__eyebrow">Screen 03</div>
+    <h1>Calendar</h1>
+  </div>
+  <div class="hz-shell stack">
+    <article class="card">
+      <div class="row">
+        <div class="event-date"><div class="event-date__day">16</div><div class="event-date__mon">Sep</div></div>
+        <div>
+          <h3 style="font-size: var(--text-md)">Pricing hot seats</h3>
+          <div class="u-meta">Tue 18:00 BST · 60 min · Zoom · Sara Kowalczyk</div>
+        </div>
+        <div class="spacer"></div>
+        <div class="row">
+          <div class="avatar-stack" aria-label="18 going">
+            <span class="avatar avatar--sm" aria-hidden="true">JT</span>
+            <span class="avatar avatar--sm" aria-hidden="true">MO</span>
+            <span class="avatar avatar--sm" aria-hidden="true">RB</span>
+          </div>
+          <button class="btn btn--primary">Going</button>
+        </div>
+      </div>
+    </article>
+    <article class="card">
+      <div class="row">
+        <div class="event-date"><div class="event-date__day">23</div><div class="event-date__mon">Sep</div></div>
+        <div>
+          <h3 style="font-size: var(--text-md)">Office hours · open room</h3>
+          <div class="u-meta">Tue 18:00 BST · 45 min · Recurring weekly</div>
+        </div>
+        <div class="spacer"></div>
+        <button class="btn btn--secondary">RSVP</button>
+      </div>
+    </article>
+    <article class="card">
+      <div class="row">
+        <div class="event-date"><div class="event-date__day">02</div><div class="event-date__mon">Oct</div></div>
+        <div>
+          <h3 style="font-size: var(--text-md)">Guest teardown: procurement conversations</h3>
+          <div class="u-meta">Thu 17:00 BST · 90 min · Recording published after</div>
+        </div>
+        <div class="spacer"></div>
+        <span class="badge badge--info">Inner Circle</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ══ 4. Membership ══════════════════════════════════════════════════════ -->
+<section class="hz-section">
+  <div class="hz-section__head">
+    <div class="hz-section__eyebrow">Screen 04</div>
+    <h1>Membership</h1>
+  </div>
+  <div class="hz-shell">
+    <div class="grid grid--plans">
+      <article class="card">
+        <div class="u-label">Free</div>
+        <div class="price"><span class="price__amount">£0</span></div>
+        <ul class="feature-list">
+          <li>Community feed and replies</li>
+          <li>Two intro lessons</li>
+          <li data-locked>Live calls</li>
+          <li data-locked>Full course library</li>
+        </ul>
+        <div class="spacer"></div>
+        <button class="btn btn--secondary btn--block">Current plan</button>
+      </article>
+
+      <article class="card card--feature">
+        <div class="row row--between">
+          <div class="u-label">Practice</div>
+          <span class="badge badge--solid">Most members</span>
+        </div>
+        <div class="price"><span class="price__amount">£89</span><span class="price__period">/month</span></div>
+        <ul class="feature-list">
+          <li>Everything in Free</li>
+          <li>Full course library</li>
+          <li>Weekly office hours</li>
+          <li>Accountability pods</li>
+        </ul>
+        <div class="spacer"></div>
+        <button class="btn btn--primary btn--block btn--lg">Start 14-day trial</button>
+        <p class="u-meta" style="text-align:center">Cancel any time · no card for the trial</p>
+      </article>
+
+      <article class="card">
+        <div class="u-label">Inner Circle</div>
+        <div class="price"><span class="price__amount">£349</span><span class="price__period">/month</span></div>
+        <ul class="feature-list">
+          <li>Everything in Practice</li>
+          <li>Monthly hot seat slot</li>
+          <li>Proposal review by Sara</li>
+          <li>Private channel, 40 seats</li>
+        </ul>
+        <div class="spacer"></div>
+        <button class="btn btn--secondary btn--block">Request an invite</button>
+        <p class="u-meta" style="text-align:center">6 seats open</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 5. Specimen ════════════════════════════════════════════════════════ -->
+<section class="hz-section">
+  <div class="hz-section__head">
+    <div class="hz-section__eyebrow">Reference</div>
+    <h1>Component specimen</h1>
+    <p class="u-secondary" style="margin-top: var(--space-2)">
+      Every control below is the same markup in all four themes. What changes is the token
+      values behind it.
+    </p>
+  </div>
+  <div class="hz-shell specimen">
+    <div class="card">
+      <div class="u-label">Type scale</div>
+      <h1 style="font-size: var(--text-3xl)">Momentum</h1>
+      <h2>Positioning sprint</h2>
+      <h3>Module two</h3>
+      <p class="post__body">Body copy sits at sixty-six characters and carries the reading. The display face is used for headings and figures only.</p>
+      <p class="u-meta">Metadata · 1,284 members · 16 Sep 2026</p>
+    </div>
+
+    <div class="card">
+      <div class="u-label">Buttons</div>
+      <div class="row row--wrap"><button class="btn btn--primary">Primary</button><button class="btn btn--secondary">Secondary</button><button class="btn btn--ghost">Ghost</button></div>
+      <div class="row row--wrap"><button class="btn btn--primary btn--lg">Large</button><button class="btn btn--danger">Remove</button></div>
+      <div class="u-label" style="margin-top: var(--space-2)">Inputs</div>
+      <input class="input" id="spec-input" placeholder="Search the community">
+      <textarea class="textarea" id="spec-textarea" placeholder="Write a reply…"></textarea>
+    </div>
+
+    <div class="card">
+      <div class="u-label">Status</div>
+      <div class="row row--wrap">
+        <span class="badge">Neutral</span>
+        <span class="badge badge--accent">Host</span>
+        <span class="badge badge--success">Paid</span>
+        <span class="badge badge--warning">Past due</span>
+        <span class="badge badge--danger">Suspended</span>
+        <span class="badge badge--info">Inner Circle</span>
+      </div>
+      <div class="u-label" style="margin-top: var(--space-2)">Accent ramp</div>
+      <div style="display:grid; grid-template-columns: repeat(9,1fr); height: 40px; border-radius: var(--radius-sm); overflow:hidden">
+        <div style="background:var(--a-1)"></div><div style="background:var(--a-2)"></div><div style="background:var(--a-3)"></div>
+        <div style="background:var(--a-4)"></div><div style="background:var(--a-5)"></div><div style="background:var(--a-6)"></div>
+        <div style="background:var(--a-7)"></div><div style="background:var(--a-8)"></div><div style="background:var(--a-9)"></div>
+      </div>
+      <div class="u-label" style="margin-top: var(--space-2)">Neutral ramp</div>
+      <div style="display:grid; grid-template-columns: repeat(13,1fr); height: 40px; border-radius: var(--radius-sm); overflow:hidden">
+        <div style="background:var(--n-0)"></div><div style="background:var(--n-1)"></div><div style="background:var(--n-2)"></div>
+        <div style="background:var(--n-3)"></div><div style="background:var(--n-4)"></div><div style="background:var(--n-5)"></div>
+        <div style="background:var(--n-6)"></div><div style="background:var(--n-7)"></div><div style="background:var(--n-8)"></div>
+        <div style="background:var(--n-9)"></div><div style="background:var(--n-10)"></div><div style="background:var(--n-11)"></div>
+        <div style="background:var(--n-12)"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="harness.js"></script>
+</body>
+</html>

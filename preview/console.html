@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en" data-direction="console" data-mode="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Momentum Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Public+Sans:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../web/styles/tokens.css">
+<link rel="stylesheet" href="../web/styles/directions/console.css">
+<link rel="stylesheet" href="harness.css">
+</head>
+<body>
+
+<div id="harness" data-page="console" data-chips="false"></div>
+
+<div class="cn-app">
+
+  <!-- Query bar replaces the category sidebar entirely -->
+  <div class="cn-querybar">
+    <span class="cn-logo">momentum:~$</span>
+    <div class="cn-query">
+      <span class="cn-query__prompt">?</span>
+      <span class="cn-token"><span class="cn-token__key">is:</span>unanswered</span>
+      <span class="cn-token"><span class="cn-token__key">category:</span>pricing</span>
+      <span class="cn-token"><span class="cn-token__key">age:</span>&lt;7d</span>
+      <span class="cn-caret" aria-hidden="true"></span>
+    </div>
+    <span class="kbd">⌘</span><span class="kbd">K</span>
+  </div>
+
+  <div class="cn-split">
+
+    <!-- Queue -->
+    <div class="cn-list">
+      <div class="cn-group">Needs a reply <span class="cn-group__count">3</span></div>
+
+      <div class="cn-row cn-row--open" aria-selected="true">
+        <span class="cn-row__glyph" aria-hidden="true">◆</span>
+        <span class="cn-row__title">Client wants to move from retainer back to project work</span>
+        <span class="cn-row__who">@mira</span>
+        <span class="cn-row__age">1d</span>
+      </div>
+      <div class="cn-row cn-row--open" aria-selected="false">
+        <span class="cn-row__glyph" aria-hidden="true">◆</span>
+        <span class="cn-row__title">How do you price a discovery phase you might not win?</span>
+        <span class="cn-row__who">@tomw</span>
+        <span class="cn-row__age">2d</span>
+      </div>
+      <div class="cn-row cn-row--open" aria-selected="false">
+        <span class="cn-row__glyph" aria-hidden="true">◆</span>
+        <span class="cn-row__title">Procurement rejected my rate card — is a rate card the problem?</span>
+        <span class="cn-row__who">@ivanp</span>
+        <span class="cn-row__age">3d</span>
+      </div>
+
+      <div class="cn-group">Following <span class="cn-group__count">6</span></div>
+
+      <div class="cn-row" aria-selected="false">
+        <span class="cn-row__glyph" aria-hidden="true">▸</span>
+        <span class="cn-row__title">October cohort: hot seats open Thursday</span>
+        <span class="cn-row__who">@sara</span>
+        <span class="cn-row__age">2h</span>
+      </div>
+      <div class="cn-row cn-row--done" aria-selected="false">
+        <span class="cn-row__glyph" aria-hidden="true">✓</span>
+        <span class="cn-row__title">Signed at £4,200/mo after eighteen months of day rates</span>
+        <span class="cn-row__who">@jamest</span>
+        <span class="cn-row__age">5h</span>
+      </div>
+      <div class="cn-row" aria-selected="false">
+        <span class="cn-row__glyph" aria-hidden="true">▸</span>
+        <span class="cn-row__title">Three-tier proposals: does the top tier ever get picked?</span>
+        <span class="cn-row__who">@priyar</span>
+        <span class="cn-row__age">1d</span>
+      </div>
+      <div class="cn-row cn-row--done" aria-selected="false">
+        <span class="cn-row__glyph" aria-hidden="true">✓</span>
+        <span class="cn-row__title">Pod 7 hit eleven weeks without a missed check-in</span>
+        <span class="cn-row__who">@rachelb</span>
+        <span class="cn-row__age">1d</span>
+      </div>
+      <div class="cn-row" aria-selected="false">
+        <span class="cn-row__glyph" aria-hidden="true">▸</span>
+        <span class="cn-row__title">Lesson 5 rewritten: the one-line answer now precedes the audit</span>
+        <span class="cn-row__who">@sara</span>
+        <span class="cn-row__age">2d</span>
+      </div>
+      <div class="cn-row" aria-selected="false">
+        <span class="cn-row__glyph" aria-hidden="true">▸</span>
+        <span class="cn-row__title">Nine proposal templates ranked by what they closed</span>
+        <span class="cn-row__who">@danielo</span>
+        <span class="cn-row__age">3d</span>
+      </div>
+
+      <div class="cn-group">Archived this week <span class="cn-group__count">14</span></div>
+      <div class="cn-row cn-row--done" aria-selected="false">
+        <span class="cn-row__glyph" aria-hidden="true">✓</span>
+        <span class="cn-row__title">Weekly office hours — recording published</span>
+        <span class="cn-row__who">@sara</span>
+        <span class="cn-row__age">4d</span>
+      </div>
+      <div class="cn-row cn-row--done" aria-selected="false">
+        <span class="cn-row__glyph" aria-hidden="true">✓</span>
+        <span class="cn-row__title">Q3 pod rebalance — assignments posted</span>
+        <span class="cn-row__who">@sara</span>
+        <span class="cn-row__age">6d</span>
+      </div>
+    </div>
+
+    <!-- Detail: no navigation needed, it is always showing the selection -->
+    <div class="cn-detail">
+      <div class="cn-detail__head">
+        <div class="cn-detail__meta">
+          <span>#1284</span>
+          <span>@mira</span>
+          <span>1d ago</span>
+          <span class="cn-tag cn-tag--warn">unanswered</span>
+          <span class="cn-tag cn-tag--accent">pricing</span>
+          <span class="cn-tag">retainers</span>
+        </div>
+        <h1 class="cn-detail__title">Client wants to move from retainer back to project work</h1>
+      </div>
+
+      <div class="cn-detail__body">
+        <p>
+          Nine months into a £3,800/month retainer. New procurement lead came in last month
+          and wants everything itemised — deliverables, hours, unit rates, the lot.
+        </p>
+        <p>
+          My instinct is that itemising kills the whole arrangement, because the value is in
+          being available and knowing their systems, and neither of those has a line item.
+          But I also do not want to lose a client over a principle.
+        </p>
+        <p>
+          Do I hold the line, or take the project work and try to rebuild the retainer in six
+          months once the new lead trusts me?
+        </p>
+      </div>
+
+      <div class="cn-replies">
+        <div class="cn-reply">
+          <span class="cn-reply__who">@jamest</span>
+          <p class="cn-reply__text">
+            Had this exact thing in 2024. I itemised, and within two quarters I was being
+            compared to a contractor day rate. Would not do it again.
+          </p>
+        </div>
+        <div class="cn-reply">
+          <span class="cn-reply__who">@sara</span>
+          <p class="cn-reply__text">
+            Third option nobody has said: give procurement what they need in the format they
+            need it, but itemise <em>outcomes</em>, not hours. "Systems availability", "vendor
+            liaison", "quarterly review" — each with a price. Same total, satisfies the
+            process, does not create an hourly comparison.
+          </p>
+        </div>
+        <div class="cn-reply">
+          <span class="cn-reply__who">@ivanp</span>
+          <p class="cn-reply__text">Bring this to Thursday's hot seat. It is exactly the format.</p>
+        </div>
+      </div>
+
+      <div class="cn-compose">
+        <span class="cn-reply__who">@you</span>
+        <input id="cn-reply-input" placeholder="Reply — ⌘↵ to send, Esc to discard">
+        <span class="kbd">R</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cn-status">
+    <span class="cn-status__seg cn-status__seg--accent"><span class="cn-dot" aria-hidden="true"></span> 63 online</span>
+    <span class="cn-status__seg">1,284 members</span>
+    <span class="cn-status__seg">3 unanswered</span>
+    <span class="cn-status__seg">next call 2d 4h</span>
+    <span class="cn-status__spacer"></span>
+    <span class="cn-status__seg"><span class="kbd">J</span><span class="kbd">K</span> move</span>
+    <span class="cn-status__seg"><span class="kbd">R</span> reply</span>
+    <span class="cn-status__seg"><span class="kbd">E</span> archive</span>
+    <span class="cn-status__seg"><span class="kbd">⌘</span><span class="kbd">K</span> commands</span>
+  </div>
+
+</div>
+
+<script src="harness.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push: { branches: [main] }
+  pull_request:
+
+jobs:
+  api:
+    name: API
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: community_coach_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 5s
+          --health-timeout 5s --health-retries 10
+    env:
+      RAILS_ENV: test
+      TEST_DATABASE_URL: postgres://postgres:postgres@localhost:5432/community_coach_test
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/community_coach_test
+    defaults: { run: { working-directory: api } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with: { bundler-cache: true, working-directory: api }
+      - run: bin/rails db:test:prepare
+      - run: bundle exec rspec
+      - name: Brakeman
+        run: bundle exec brakeman --no-pager --quiet
+      - name: Dependency audit
+        run: bundle exec bundler-audit check --update
+
+  web:
+    name: Web
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: web } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: web/package-lock.json }
+      - run: npm ci
+      # The rule the whole whitelabel guarantee rests on: components read tokens only.
+      - run: npm run lint:tokens
+      - run: npm run typecheck
+      - run: npm run build

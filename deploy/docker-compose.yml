@@ -1,0 +1,101 @@
+# Community Coach — the documented self-host path.
+#
+#   cp deploy/.env.example deploy/.env && edit it
+#   docker compose -f deploy/docker-compose.yml up -d
+#
+# Five services. No Redis: Rails 8's Solid Queue, Solid Cache and Solid Cable all run on
+# Postgres, which is one fewer thing for a self-hoster to operate and back up.
+
+name: community-coach
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports: ["80:80", "443:443", "443:443/udp"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      APP_HOST: ${APP_HOST:?set APP_HOST in .env}
+    depends_on: [web, api]
+
+  # Single origin is the whole design: Caddy sends /api, /auth and /cable to Rails and
+  # everything else to Next, so one session cookie serves both and there is no CORS.
+  web:
+    build: { context: .., dockerfile: deploy/Dockerfile.web }
+    restart: unless-stopped
+    environment:
+      API_INTERNAL_URL: http://api:3000
+      APP_NAME: ${APP_NAME:-Community Coach}
+      NODE_ENV: production
+    depends_on: [api]
+
+  api:
+    build: { context: .., dockerfile: deploy/Dockerfile.api }
+    restart: unless-stopped
+    environment: &api_env
+      RAILS_ENV: production
+      DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}@postgres:5432/community_coach
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:?generate with `openssl rand -hex 64`}
+      APP_URL: https://${APP_HOST}
+      APP_ORIGINS: https://${APP_HOST}
+      FORCE_SSL: "true"
+      S3_ENDPOINT: http://minio:9000
+      S3_BUCKET: ${S3_BUCKET:-community-coach}
+      S3_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID:-minioadmin}
+      S3_SECRET_ACCESS_KEY: ${S3_SECRET_ACCESS_KEY:-minioadmin}
+      S3_FORCE_PATH_STYLE: "true"
+      VIDEO_PROVIDER: ${VIDEO_PROVIDER:-local}
+      BILLING_PROVIDER: ${BILLING_PROVIDER:-stripe}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+      SMTP_ADDRESS: ${SMTP_ADDRESS:-}
+      SMTP_USERNAME: ${SMTP_USERNAME:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      MAIL_FROM: ${MAIL_FROM:-hello@example.com}
+    depends_on:
+      postgres: { condition: service_healthy }
+      minio: { condition: service_started }
+
+  # Jobs run in their own container so a transcode cannot starve the web process. ffmpeg
+  # will use every core it is given, and a member waiting on a page load is a worse
+  # outcome than a lesson publishing a few minutes later.
+  worker:
+    build: { context: .., dockerfile: deploy/Dockerfile.api }
+    restart: unless-stopped
+    command: ["bundle", "exec", "rake", "solid_queue:start"]
+    environment:
+      <<: *api_env
+      JOB_CONCURRENCY: ${JOB_CONCURRENCY:-1}
+    depends_on:
+      postgres: { condition: service_healthy }
+
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: community_coach
+    volumes: [postgres_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY_ID:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_ACCESS_KEY:-minioadmin}
+    volumes: [minio_data:/data]
+
+volumes:
+  postgres_data:
+  minio_data:
+  caddy_data:
+  caddy_config:

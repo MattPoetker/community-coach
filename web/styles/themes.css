@@ -1,0 +1,377 @@
+/* ============================================================================
+   Community Coach — Theme Presets
+   ----------------------------------------------------------------------------
+   A preset is a bundle of Layer 0 brand inputs plus a structural personality
+   (radius language, elevation model, density, component tokens). An owner picks
+   a preset, then overrides a handful of Layer 0 values — accent, fonts, logo —
+   and keeps the personality.
+
+   Each preset restates only what differs from tokens.css. Nothing here touches
+   a Layer 2 mapping, so dark mode keeps working for free.
+
+   Presets are named for the customer archetype they serve, not for a colour.
+   ========================================================================== */
+
+
+/* ─────────────────────────────────────────────────────────────────────────
+   KILN — the relational coach
+   Life, career and creative coaches. Small cohorts, high trust, long
+   relationships. Warm sand ground, deep forest accent: growth and cultivation
+   rather than the hospitality-brand terracotta everyone reaches for. Soft
+   shadows tinted with the ground's own hue, generous radii, roomy density.
+   Nothing here should feel like software.
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="kiln"] {
+  --brand-accent-l: 0.46;
+  --brand-accent-c: 0.098;
+  --brand-accent-h: 156;
+  --brand-neutral-h: 74;
+  --brand-neutral-c: 0.016;
+  --brand-font-display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  --brand-font-body: "Karla", "Helvetica Neue", Arial, sans-serif;
+  --brand-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --brand-radius-scale: 1.5;
+  --brand-density: 1.08;
+  --brand-type-ratio: 1.22;
+
+  --weight-display: 600;
+  --leading-tight: 1.12;
+  --tracking-tight: -0.015em;
+
+  /* Elevation reads as warm daylight, not a grey drop shadow. */
+  --shadow-1: 0 1px 2px oklch(0.45 0.03 74 / 0.06);
+  --shadow-2: 0 4px 16px -4px oklch(0.45 0.03 74 / 0.14);
+  --shadow-3: 0 18px 44px -12px oklch(0.42 0.04 74 / 0.20);
+
+  --card-radius: var(--radius-xl);
+  --card-border: none;
+  --card-shadow: var(--shadow-2);
+  --card-padding: var(--space-5);
+  --button-radius: var(--radius-lg);
+  --input-radius: var(--radius-lg);
+  --nav-radius: var(--radius-lg);
+  --rail-width: 3px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="kiln"]:not([data-mode="light"]) {
+    --brand-neutral-c: 0.012;
+    --brand-accent-l: 0.56;
+    --card-border: var(--border-width) solid var(--n-3);
+  }
+}
+:root[data-theme="kiln"][data-mode="dark"] {
+  --brand-neutral-c: 0.012;
+  --brand-accent-l: 0.56;
+  --card-border: var(--border-width) solid var(--n-3);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────
+   MERIDIAN — the high-ticket mastermind
+   $10k+ cohorts, invite-only rooms, executive programmes. Dark by default:
+   a deep petrol ground carrying real chroma, not a neutral near-black, lit by
+   a warm coral that sits opposite it on the wheel. Elevation is luminance —
+   surfaces get lighter as they rise, the way a stage does — so there is almost
+   no shadow anywhere. High-contrast serif display against a quiet grotesque.
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="meridian"] {
+  --brand-accent-l: 0.66;
+  --brand-accent-c: 0.145;
+  --brand-accent-h: 32;
+  --brand-neutral-h: 205;
+  --brand-neutral-c: 0.038;
+  --brand-font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --brand-font-body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --brand-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --brand-radius-scale: 0.75;
+  --brand-density: 1;
+  --brand-type-ratio: 1.28;
+
+  --weight-display: 400;      /* the serif carries size, not weight */
+  --leading-tight: 1.04;
+  --tracking-tight: -0.01em;
+  --tracking-label: 0.16em;
+
+  --shadow-1: none;
+  --shadow-2: none;
+  --shadow-3: 0 24px 60px -20px oklch(0.12 0.03 205 / 0.7);
+
+  --card-radius: var(--radius-md);
+  --card-border: var(--border-width) solid var(--border-subtle);
+  --card-shadow: none;
+  --card-padding: var(--space-5);
+  --button-radius: var(--radius-sm);
+  --input-radius: var(--radius-sm);
+  --nav-radius: var(--radius-sm);
+  --rail-width: 2px;
+  --meta-transform: uppercase;
+  --meta-tracking: var(--tracking-label);
+}
+
+/* Meridian's light mode is a real design, not an inversion: the petrol ground
+   becomes a cool porcelain and the coral darkens to hold contrast on it. */
+:root[data-theme="meridian"][data-mode="light"] {
+  --brand-accent-l: 0.52;
+  --brand-accent-c: 0.155;
+  --brand-neutral-c: 0.012;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────
+   SIGNAL — the performance coach
+   Fitness, sport, sales floors, anything with a scoreboard. Reads like a
+   broadcast graphics package: hard 2px ink borders instead of shadows, tight
+   rectangular cards against fully-round pills, and an expanded grotesque doing
+   the numbers. Structure comes from the border weight, so the surface stays
+   flat and bright.
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="signal"] {
+  --brand-accent-l: 0.55;
+  --brand-accent-c: 0.20;
+  --brand-accent-h: 252;
+  --brand-neutral-h: 254;
+  --brand-neutral-c: 0.008;
+  --brand-font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --brand-font-body: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --brand-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --brand-radius-scale: 0.5;
+  --brand-density: 1;
+  --brand-type-ratio: 1.25;
+
+  --weight-display: 700;
+  --leading-tight: 0.98;
+  --tracking-tight: -0.035em;
+  --border-width: 2px;
+
+  --shadow-1: none;
+  --shadow-2: none;
+  --shadow-3: 6px 6px 0 var(--n-12);   /* offset block, not a blur */
+
+  --border-subtle: var(--n-5);
+  --border-default: var(--n-12);
+
+  --card-radius: var(--radius-sm);
+  --card-border: var(--border-width) solid var(--n-12);
+  --card-shadow: none;
+  --card-padding: var(--space-4);
+  /* The signature: rectangular cards, fully-round controls. */
+  --button-radius: var(--radius-full);
+  --input-radius: var(--radius-full);
+  --nav-radius: var(--radius-full);
+  --button-weight: var(--weight-bold);
+  --button-tracking: 0.04em;
+  --button-transform: uppercase;
+  --rail-width: 4px;
+  --meta-transform: uppercase;
+  --meta-tracking: 0.04em;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="signal"]:not([data-mode="light"]) {
+    --border-subtle: var(--n-4);
+    --border-default: var(--n-8);
+    --card-border: var(--border-width) solid var(--n-4);
+    --shadow-3: 6px 6px 0 var(--a-6);
+  }
+}
+:root[data-theme="signal"][data-mode="dark"] {
+  --border-subtle: var(--n-4);
+  --border-default: var(--n-8);
+  --card-border: var(--border-width) solid var(--n-4);
+  --shadow-3: 6px 6px 0 var(--a-6);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────
+   LEDGER — the professional practice
+   Consultants, therapists, accountants, compliance training. Sober and dense.
+   Separation comes from fill steps and rules, never elevation; radii are
+   almost square; every piece of metadata is set in mono with tabular figures,
+   which is the whole signature. The oxblood accent runs deliberately warm
+   against cool grey — the one place the theme raises its voice.
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="ledger"] {
+  --brand-accent-l: 0.44;
+  --brand-accent-c: 0.135;
+  --brand-accent-h: 22;
+  --brand-neutral-h: 248;
+  --brand-neutral-c: 0.005;
+  --brand-font-display: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --brand-font-body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --brand-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --brand-radius-scale: 0.25;
+  --brand-density: 0.88;
+  --brand-type-ratio: 1.18;
+
+  --weight-display: 600;
+  --leading-tight: 1.15;
+  --tracking-tight: -0.01em;
+
+  --shadow-1: none;
+  --shadow-2: none;
+  --shadow-3: 0 8px 24px -8px oklch(0.3 0.01 248 / 0.18);
+
+  --surface-canvas: var(--n-2);
+  --card-radius: var(--radius-xs);
+  --card-border: var(--border-width) solid var(--border-default);
+  --card-shadow: none;
+  --card-padding: var(--space-4);
+  --button-radius: var(--radius-xs);
+  --input-radius: var(--radius-xs);
+  --nav-radius: var(--radius-xs);
+  --avatar-radius: var(--radius-xs);
+  --avatar-stack-overlap: 0px;
+  --avatar-stack-gap: var(--space-1);
+  --rail-width: 3px;
+  --meta-font: var(--font-mono);
+  --meta-transform: uppercase;
+  --meta-tracking: 0.02em;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="ledger"]:not([data-mode="light"]) {
+    --surface-canvas: var(--n-0);
+    --brand-accent-l: 0.52;
+  }
+}
+:root[data-theme="ledger"][data-mode="dark"] {
+  --surface-canvas: var(--n-0);
+  --brand-accent-l: 0.52;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   KILN VARIATIONS
+   Kiln is the control. These two hold its warmth and its relational tone, and
+   move on the axes a client can actually articulate: how literary it feels,
+   and how much it asserts itself.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+
+/* ─────────────────────────────────────────────────────────────────────────
+   HEARTH — Kiln, more literary
+   For coaches whose product is largely writing: newsletters, essays, long
+   reflective lessons. The ground drops from Kiln's near-white sand to a
+   deeper oat, so the page reads as paper stock rather than screen. A warm
+   low-contrast serif takes the display role, with Kiln's Karla retained
+   underneath for continuity. Accent moves from forest to a dusty brick —
+   kept deliberately low in chroma, because a saturated terracotta on warm
+   cream is the single most over-used pairing in this category.
+   Roomier than Kiln, and less rounded: the softness comes from the palette
+   and the type, so the geometry does not have to shout it too.
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="hearth"] {
+  --brand-accent-l: 0.47;
+  --brand-accent-c: 0.086;
+  --brand-accent-h: 28;
+  --brand-neutral-h: 58;
+  --brand-neutral-c: 0.021;
+  --brand-font-display: "Newsreader", Georgia, "Times New Roman", serif;
+  --brand-font-body: "Karla", "Helvetica Neue", Arial, sans-serif;
+  --brand-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --brand-radius-scale: 1.0;
+  --brand-density: 1.12;
+  --brand-type-ratio: 1.30;
+
+  --weight-display: 500;
+  --leading-tight: 1.10;
+  --leading-relaxed: 1.75;
+  --tracking-tight: -0.005em;
+
+  /* The ground is darker than Kiln's, so shadows have to be lighter to read
+     at all — depth here comes from the paper tone, not from float. */
+  --shadow-1: none;
+  --shadow-2: 0 2px 10px -3px oklch(0.42 0.03 58 / 0.12);
+  --shadow-3: 0 14px 36px -14px oklch(0.40 0.04 58 / 0.20);
+
+  --surface-canvas: var(--n-2);
+  --card-radius: var(--radius-lg);
+  --card-border: none;
+  --card-shadow: var(--shadow-2);
+  --card-padding: var(--space-6);
+  --button-radius: var(--radius-md);
+  --input-radius: var(--radius-md);
+  --nav-radius: var(--radius-md);
+  --rail-width: 2px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="hearth"]:not([data-mode="light"]) {
+    --brand-neutral-c: 0.014;
+    --brand-accent-l: 0.60;
+    --surface-canvas: var(--n-0);
+    --card-border: var(--border-width) solid var(--n-3);
+  }
+}
+:root[data-theme="hearth"][data-mode="dark"] {
+  --brand-neutral-c: 0.014;
+  --brand-accent-l: 0.60;
+  --surface-canvas: var(--n-0);
+  --card-border: var(--border-width) solid var(--n-3);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────
+   GROVE — Kiln, more assured
+   For coaches selling to businesses rather than individuals: the same warmth,
+   carried with more composure. The neutral cools to a warm grey and the
+   accent deepens from Kiln's forest to a dark teal, which holds authority
+   without going corporate-navy. Cards are defined by a hairline rather than a
+   float, radii tighten, and the density comes back to neutral — the result
+   reads as a product rather than a place, while staying recognisably a Kiln
+   relative. Epilogue's narrow apertures give the display a firmness Kiln's
+   Bricolage deliberately lacks.
+   ───────────────────────────────────────────────────────────────────────── */
+[data-theme="grove"] {
+  --brand-accent-l: 0.44;
+  --brand-accent-c: 0.090;
+  --brand-accent-h: 182;
+  --brand-neutral-h: 95;
+  --brand-neutral-c: 0.009;
+  --brand-font-display: "Epilogue", "Helvetica Neue", Arial, sans-serif;
+  --brand-font-body: "Figtree", "Helvetica Neue", Arial, sans-serif;
+  --brand-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --brand-radius-scale: 0.9;
+  --brand-density: 1.0;
+  --brand-type-ratio: 1.24;
+
+  --weight-display: 600;
+  --leading-tight: 1.06;
+  --tracking-tight: -0.025em;
+
+  --shadow-1: none;
+  --shadow-2: 0 1px 3px oklch(0.40 0.02 95 / 0.06);
+  --shadow-3: 0 10px 30px -12px oklch(0.38 0.03 95 / 0.18);
+
+  --card-radius: var(--radius-lg);
+  --card-border: var(--border-width) solid var(--border-subtle);
+  --card-shadow: var(--shadow-1);
+  --card-padding: var(--space-5);
+  --button-radius: var(--radius-md);
+  --input-radius: var(--radius-md);
+  --nav-radius: var(--radius-md);
+  --rail-width: 3px;
+  --meta-transform: uppercase;
+  --meta-tracking: 0.05em;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root[data-theme="grove"]:not([data-mode="light"]) {
+    --brand-accent-l: 0.56;
+    --card-border: var(--border-width) solid var(--n-3);
+  }
+}
+:root[data-theme="grove"][data-mode="dark"] {
+  --brand-accent-l: 0.56;
+  --card-border: var(--border-width) solid var(--n-3);
+}
+
+
+/* Meridian's coral resolves its contrast colour to near-black, so the scrim
+   lightens rather than darkens. In production Branding::TokenCompiler emits this
+   automatically from the same decision that picked the contrast colour; it is
+   restated here because the static preview has no compiler in front of it. */
+[data-theme="meridian"] {
+  --media-scrim: oklch(0.97 0.01 32 / 0.78);
+}

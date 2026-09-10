@@ -1,0 +1,16 @@
+{
+  "key": "kiln",
+  "name": "Kiln",
+  "archetype": "The relational coach",
+  "bestFor": ["Life and career coaching", "Creative cohorts", "Small high-trust groups"],
+  "defaultMode": "light",
+  "accent": { "l": 0.46, "c": 0.098, "h": 156 },
+  "neutral": { "h": 74, "c": 0.016 },
+  "fonts": {
+    "display": "Bricolage Grotesque",
+    "body": "Karla",
+    "mono": "IBM Plex Mono"
+  },
+  "structure": { "radiusScale": 1.5, "density": 1.08, "typeRatio": 1.22, "elevation": "soft" },
+  "notes": "Warm sand ground, deep forest accent. Soft shadows tinted with the ground hue. Nothing should read as software."
+}

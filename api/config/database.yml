@@ -1,0 +1,30 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+  url: <%= ENV.fetch("DATABASE_URL", "postgres://localhost/community_coach_development") %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+  url: <%= ENV.fetch("TEST_DATABASE_URL", "postgres://localhost/community_coach_test") %>
+
+production:
+  primary: &primary_production
+    <<: *default
+  # Solid Queue, Cache and Cable each get their own database so a busy job queue cannot
+  # bloat or vacuum-stall the application's own tables.
+  cache:
+    <<: *primary_production
+    database: community_coach_cache
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_production
+    database: community_coach_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary_production
+    database: community_coach_cable
+    migrations_paths: db/cable_migrate

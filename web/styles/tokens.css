@@ -1,0 +1,321 @@
+/* ============================================================================
+   Community Coach — Token Contract
+   ----------------------------------------------------------------------------
+   THE ONE RULE: components read Layer 2 and Layer 3 only.
+   A component that references a Layer 0 or Layer 1 token, or a raw hex value,
+   is a whitelabel bug — it will not respond to a community's branding.
+
+   Layer 0  brand inputs      ~14 values an owner sets. Stored in
+                              communities.branding jsonb.
+   Layer 1  derived ramps     computed from Layer 0 by Branding::TokenCompiler.
+   Layer 2  semantic tokens   the contract. What every component consumes.
+   Layer 3  component tokens  per-component knobs a theme can retune without
+                              touching component code.
+
+   This file declares the contract and the structural defaults. Themes override
+   it in themes.css. Runtime branding overrides both via an injected <style>.
+   ========================================================================== */
+
+:root {
+  /* ---- Layer 0: brand inputs ------------------------------------------- */
+  /* Overridden per community at runtime. These are the fallbacks. */
+  --brand-accent-l: 0.55;
+  --brand-accent-c: 0.15;
+  --brand-accent-h: 250;
+  --brand-neutral-h: 250;      /* neutrals carry a bias toward the accent */
+  --brand-neutral-c: 0.006;    /* raise for a warmer/more tinted grey */
+  --brand-font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --brand-font-body: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --brand-font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+  --brand-radius-scale: 1;
+  --brand-density: 1;
+  --brand-type-ratio: 1.2;
+
+  /* ---- Layer 1: derived ramps ------------------------------------------ */
+  /* Neutral ramp, light mode. 0 = paper, 12 = ink. */
+  --n-0:  oklch(0.995 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-1:  oklch(0.975 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-2:  oklch(0.950 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-3:  oklch(0.915 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-4:  oklch(0.870 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-5:  oklch(0.800 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-6:  oklch(0.700 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-7:  oklch(0.605 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-8:  oklch(0.510 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-9:  oklch(0.420 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-10: oklch(0.330 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-11: oklch(0.240 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-12: oklch(0.165 var(--brand-neutral-c) var(--brand-neutral-h));
+
+  /* Accent ramp, derived from the three brand-accent channels. */
+  --a-1:  oklch(0.970 calc(var(--brand-accent-c) * 0.16) var(--brand-accent-h));
+  --a-2:  oklch(0.935 calc(var(--brand-accent-c) * 0.30) var(--brand-accent-h));
+  --a-3:  oklch(0.880 calc(var(--brand-accent-c) * 0.48) var(--brand-accent-h));
+  --a-4:  oklch(0.800 calc(var(--brand-accent-c) * 0.70) var(--brand-accent-h));
+  --a-5:  oklch(0.700 calc(var(--brand-accent-c) * 0.88) var(--brand-accent-h));
+  --a-6:  oklch(var(--brand-accent-l) var(--brand-accent-c) var(--brand-accent-h));
+  --a-7:  oklch(calc(var(--brand-accent-l) - 0.07) var(--brand-accent-c) var(--brand-accent-h));
+  --a-8:  oklch(calc(var(--brand-accent-l) - 0.14) calc(var(--brand-accent-c) * 0.94) var(--brand-accent-h));
+  --a-9:  oklch(calc(var(--brand-accent-l) - 0.24) calc(var(--brand-accent-c) * 0.80) var(--brand-accent-h));
+
+  /* Text colour that sits on a filled accent block. The compiler flips this to
+     --n-12 when the accent is light enough that white would fail contrast. */
+  --a-contrast: oklch(0.99 0.005 var(--brand-accent-h));
+
+  /* ---- Layer 2: semantic tokens — THE CONTRACT ------------------------- */
+
+  /* Surfaces */
+  --surface-canvas:        var(--n-1);
+  --surface-default:       var(--n-0);
+  --surface-raised:        var(--n-0);
+  --surface-sunken:        var(--n-2);
+  --surface-hover:         var(--n-2);
+  --surface-active:        var(--n-3);
+  --surface-inverse:       var(--n-12);
+  --surface-accent:        var(--a-6);
+  --surface-accent-hover:  var(--a-7);
+  --surface-accent-subtle: var(--a-2);
+
+  /* Text */
+  --text-primary:    var(--n-12);
+  --text-secondary:  var(--n-9);
+  --text-tertiary:   var(--n-7);
+  --text-inverse:    var(--n-0);
+  --text-accent:     var(--a-8);
+  --text-on-accent:  var(--a-contrast);
+  --text-link:       var(--a-8);
+
+  /* Borders */
+  --border-subtle:  var(--n-3);
+  --border-default: var(--n-4);
+  --border-strong:  var(--n-6);
+  --border-accent:  var(--a-6);
+  --border-focus:   var(--a-6);
+  --focus-ring:     0 0 0 2px var(--surface-default), 0 0 0 4px var(--border-focus);
+
+  /* Status — hues fixed, chroma tracks the theme so they never look pasted in */
+  --success:         oklch(0.58 0.13 152);
+  --success-surface: oklch(0.95 0.04 152);
+  --success-text:    oklch(0.42 0.11 152);
+  --warning:         oklch(0.75 0.15 75);
+  --warning-surface: oklch(0.96 0.05 75);
+  --warning-text:    oklch(0.48 0.11 60);
+  --danger:          oklch(0.58 0.19 25);
+  --danger-surface:  oklch(0.95 0.04 25);
+  --danger-text:     oklch(0.46 0.16 25);
+  --info:            oklch(0.60 0.13 240);
+  --info-surface:    oklch(0.95 0.04 240);
+  --info-text:       oklch(0.45 0.12 240);
+
+  /* Typography */
+  --font-display: var(--brand-font-display);
+  --font-body:    var(--brand-font-body);
+  --font-mono:    var(--brand-font-mono);
+
+  --text-xs:   calc(1rem / var(--brand-type-ratio) / var(--brand-type-ratio));
+  --text-sm:   calc(1rem / var(--brand-type-ratio));
+  --text-base: 1rem;
+  --text-md:   calc(1rem * var(--brand-type-ratio));
+  --text-lg:   calc(1rem * var(--brand-type-ratio) * var(--brand-type-ratio));
+  --text-xl:   calc(1rem * var(--brand-type-ratio) * var(--brand-type-ratio) * var(--brand-type-ratio));
+  --text-2xl:  calc(var(--text-xl) * var(--brand-type-ratio));
+  --text-3xl:  calc(var(--text-2xl) * var(--brand-type-ratio));
+
+  --leading-tight:   1.08;
+  --leading-snug:    1.28;
+  --leading-normal:  1.55;
+  --leading-relaxed: 1.7;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:  0.06em;
+  --tracking-label: 0.1em;
+
+  --weight-normal: 400;
+  --weight-medium: 500;
+  --weight-semi:   600;
+  --weight-bold:   700;
+  --weight-display: 700;
+
+  /* Spacing — every value scales with density */
+  --space-1:  calc(0.25rem * var(--brand-density));
+  --space-2:  calc(0.5rem  * var(--brand-density));
+  --space-3:  calc(0.75rem * var(--brand-density));
+  --space-4:  calc(1rem    * var(--brand-density));
+  --space-5:  calc(1.5rem  * var(--brand-density));
+  --space-6:  calc(2rem    * var(--brand-density));
+  --space-7:  calc(3rem    * var(--brand-density));
+  --space-8:  calc(4rem    * var(--brand-density));
+
+  /* Control sizing — the density knob is applied here, once, so components never
+     reach back to Layer 0 to size themselves. */
+  --control-height-sm:   calc(1.75rem * var(--brand-density));
+  --control-height-md:   calc(2.25rem * var(--brand-density));
+  --control-height-lg:   calc(2.75rem * var(--brand-density));
+  --textarea-min-height: calc(5rem    * var(--brand-density));
+  --avatar-size-sm:      calc(1.75rem * var(--brand-density));
+  --avatar-size-md:      calc(2.25rem * var(--brand-density));
+  --avatar-size-lg:      calc(3.5rem  * var(--brand-density));
+  --progress-height:     calc(0.5rem  * var(--brand-density));
+  --lesson-mark-size:    calc(1.25rem * var(--brand-density));
+  --event-date-width:    calc(3.25rem * var(--brand-density));
+
+  /* Radii — every value scales with the brand radius knob */
+  --radius-xs:   calc(2px  * var(--brand-radius-scale));
+  --radius-sm:   calc(4px  * var(--brand-radius-scale));
+  --radius-md:   calc(8px  * var(--brand-radius-scale));
+  --radius-lg:   calc(12px * var(--brand-radius-scale));
+  --radius-xl:   calc(18px * var(--brand-radius-scale));
+  --radius-full: 999px;
+
+  /* Elevation — themes redefine these wholesale, including to `none` */
+  --shadow-1: none;
+  --shadow-2: 0 2px 8px -2px oklch(0.2 0.02 var(--brand-neutral-h) / 0.1);
+  --shadow-3: 0 12px 32px -8px oklch(0.2 0.02 var(--brand-neutral-h) / 0.16);
+  --border-width: 1px;
+
+  /* Motion */
+  --motion-fast: 120ms;
+  --motion-base: 220ms;
+  --motion-slow: 420ms;
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* ---- Layer 3: component tokens --------------------------------------- */
+  /* Themes retune these independently of the global radius scale. This is how
+     a theme gets 4px cards and fully-round buttons without a code change. */
+  --card-radius:     var(--radius-lg);
+  --card-border:     var(--border-width) solid var(--border-subtle);
+  --card-shadow:     var(--shadow-1);
+  --card-padding:    var(--space-5);
+  --button-radius:   var(--radius-md);
+  --button-weight:   var(--weight-semi);
+  --button-tracking: var(--tracking-normal);
+  --button-transform: none;
+  --input-radius:    var(--radius-md);
+  --pill-radius:     var(--radius-full);
+  --avatar-radius:   var(--radius-full);
+  --avatar-stack-overlap: calc(var(--space-2) * -1);
+  --avatar-stack-gap: 0px;
+  --nav-radius:      var(--radius-md);
+  --rail-width:      3px;
+  --media-gradient-from: var(--a-5);
+  --media-gradient-mid:  var(--a-7);
+  --media-gradient-to:   var(--a-9);
+  --media-fg:            var(--a-contrast);
+  /* Scrim behind text laid over media. Derived from the ramp's dark end so it
+     works whichever contrast colour the accent resolved to. */
+  --media-scrim:         oklch(0.16 0.02 var(--brand-accent-h) / 0.72);
+  --meta-font:       var(--font-body);
+  --meta-transform:  none;
+  --meta-tracking:   var(--tracking-normal);
+}
+
+/* Dark mode, applied to the shared contract. Themes override the ramp values,
+   never the mappings below — so a theme only ever restates what differs. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-mode="light"]) {
+    --n-0:  oklch(0.155 var(--brand-neutral-c) var(--brand-neutral-h));
+    --n-1:  oklch(0.185 var(--brand-neutral-c) var(--brand-neutral-h));
+    --n-2:  oklch(0.215 var(--brand-neutral-c) var(--brand-neutral-h));
+    --n-3:  oklch(0.260 var(--brand-neutral-c) var(--brand-neutral-h));
+    --n-4:  oklch(0.310 var(--brand-neutral-c) var(--brand-neutral-h));
+    --n-5:  oklch(0.380 var(--brand-neutral-c) var(--brand-neutral-h));
+    --n-6:  oklch(0.460 var(--brand-neutral-c) var(--brand-neutral-h));
+    --n-7:  oklch(0.560 var(--brand-neutral-c) var(--brand-neutral-h));
+    --n-8:  oklch(0.650 var(--brand-neutral-c) var(--brand-neutral-h));
+    --n-9:  oklch(0.740 var(--brand-neutral-c) var(--brand-neutral-h));
+    --n-10: oklch(0.830 var(--brand-neutral-c) var(--brand-neutral-h));
+    --n-11: oklch(0.910 var(--brand-neutral-c) var(--brand-neutral-h));
+    --n-12: oklch(0.970 var(--brand-neutral-c) var(--brand-neutral-h));
+
+    --a-1: oklch(0.220 calc(var(--brand-accent-c) * 0.30) var(--brand-accent-h));
+    --a-2: oklch(0.270 calc(var(--brand-accent-c) * 0.45) var(--brand-accent-h));
+    --a-3: oklch(0.330 calc(var(--brand-accent-c) * 0.62) var(--brand-accent-h));
+    --a-4: oklch(0.420 calc(var(--brand-accent-c) * 0.80) var(--brand-accent-h));
+    --a-5: oklch(0.530 calc(var(--brand-accent-c) * 0.92) var(--brand-accent-h));
+    --a-6: oklch(calc(var(--brand-accent-l) + 0.08) var(--brand-accent-c) var(--brand-accent-h));
+    --a-7: oklch(calc(var(--brand-accent-l) + 0.15) calc(var(--brand-accent-c) * 0.92) var(--brand-accent-h));
+    --a-8: oklch(calc(var(--brand-accent-l) + 0.24) calc(var(--brand-accent-c) * 0.72) var(--brand-accent-h));
+    --a-9: oklch(calc(var(--brand-accent-l) + 0.34) calc(var(--brand-accent-c) * 0.50) var(--brand-accent-h));
+
+    --surface-canvas:  var(--n-0);
+    --surface-default: var(--n-1);
+    --surface-raised:  var(--n-2);
+    --surface-sunken:  var(--n-0);
+    --surface-inverse: var(--n-12);
+    --text-inverse:    var(--n-0);
+    --text-accent:     var(--a-8);
+    --text-link:       var(--a-8);
+
+    --success-surface: oklch(0.28 0.06 152);
+    --success-text:    oklch(0.82 0.13 152);
+    --warning-surface: oklch(0.30 0.06 75);
+    --warning-text:    oklch(0.86 0.13 85);
+    --danger-surface:  oklch(0.29 0.07 25);
+    --danger-text:     oklch(0.80 0.13 25);
+    --info-surface:    oklch(0.28 0.06 240);
+    --info-text:       oklch(0.82 0.11 240);
+
+    --shadow-2: 0 2px 10px -2px oklch(0 0 0 / 0.5);
+    --shadow-3: 0 16px 40px -10px oklch(0 0 0 / 0.62);
+  }
+}
+
+/* Explicit dark choice must also win over a light OS preference. The block is
+   generated from the same source as the media query above — see
+   docs/DESIGN_SYSTEM.md on why this duplication is deliberate. */
+:root[data-mode="dark"] {
+  --n-0:  oklch(0.155 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-1:  oklch(0.185 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-2:  oklch(0.215 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-3:  oklch(0.260 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-4:  oklch(0.310 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-5:  oklch(0.380 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-6:  oklch(0.460 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-7:  oklch(0.560 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-8:  oklch(0.650 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-9:  oklch(0.740 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-10: oklch(0.830 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-11: oklch(0.910 var(--brand-neutral-c) var(--brand-neutral-h));
+  --n-12: oklch(0.970 var(--brand-neutral-c) var(--brand-neutral-h));
+
+  --a-1: oklch(0.220 calc(var(--brand-accent-c) * 0.30) var(--brand-accent-h));
+  --a-2: oklch(0.270 calc(var(--brand-accent-c) * 0.45) var(--brand-accent-h));
+  --a-3: oklch(0.330 calc(var(--brand-accent-c) * 0.62) var(--brand-accent-h));
+  --a-4: oklch(0.420 calc(var(--brand-accent-c) * 0.80) var(--brand-accent-h));
+  --a-5: oklch(0.530 calc(var(--brand-accent-c) * 0.92) var(--brand-accent-h));
+  --a-6: oklch(calc(var(--brand-accent-l) + 0.08) var(--brand-accent-c) var(--brand-accent-h));
+  --a-7: oklch(calc(var(--brand-accent-l) + 0.15) calc(var(--brand-accent-c) * 0.92) var(--brand-accent-h));
+  --a-8: oklch(calc(var(--brand-accent-l) + 0.24) calc(var(--brand-accent-c) * 0.72) var(--brand-accent-h));
+  --a-9: oklch(calc(var(--brand-accent-l) + 0.34) calc(var(--brand-accent-c) * 0.50) var(--brand-accent-h));
+
+  --surface-canvas:  var(--n-0);
+  --surface-default: var(--n-1);
+  --surface-raised:  var(--n-2);
+  --surface-sunken:  var(--n-0);
+  --surface-inverse: var(--n-12);
+  --text-inverse:    var(--n-0);
+  --text-accent:     var(--a-8);
+  --text-link:       var(--a-8);
+
+  --success-surface: oklch(0.28 0.06 152);
+  --success-text:    oklch(0.82 0.13 152);
+  --warning-surface: oklch(0.30 0.06 75);
+  --warning-text:    oklch(0.86 0.13 85);
+  --danger-surface:  oklch(0.29 0.07 25);
+  --danger-text:     oklch(0.80 0.13 25);
+  --info-surface:    oklch(0.28 0.06 240);
+  --info-text:       oklch(0.82 0.11 240);
+
+  --shadow-2: 0 2px 10px -2px oklch(0 0 0 / 0.5);
+  --shadow-3: 0 16px 40px -10px oklch(0 0 0 / 0.62);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 1ms;
+    --motion-base: 1ms;
+    --motion-slow: 1ms;
+  }
+}

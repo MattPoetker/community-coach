@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+/api/vendor/bundle
+
+# Build output
+.next/
+out/
+/api/tmp/
+/api/log/
+/api/storage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Environment
+.env
+.env.*
+!.env.example
+/deploy/.env
+
+# Local artefacts
+*.png
+!docs/**/*.png
+.playwright-mcp/
+.DS_Store
+
+# Rails credentials: this product takes SECRET_KEY_BASE from the environment, so neither
+# the key nor the encrypted blob should ever be in the repo.
+/api/config/master.key
+/api/config/credentials.yml.enc

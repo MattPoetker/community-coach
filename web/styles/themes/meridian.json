@@ -1,0 +1,16 @@
+{
+  "key": "meridian",
+  "name": "Meridian",
+  "archetype": "The high-ticket mastermind",
+  "bestFor": ["$10k+ cohorts", "Invite-only rooms", "Executive programmes"],
+  "defaultMode": "dark",
+  "accent": { "l": 0.66, "c": 0.145, "h": 32 },
+  "neutral": { "h": 205, "c": 0.038 },
+  "fonts": {
+    "display": "Instrument Serif",
+    "body": "Hanken Grotesk",
+    "mono": "IBM Plex Mono"
+  },
+  "structure": { "radiusScale": 0.75, "density": 1.0, "typeRatio": 1.28, "elevation": "luminance" },
+  "notes": "Deep petrol ground carrying real chroma, lit by a warm coral opposite it. Elevation is luminance, not shadow."
+}

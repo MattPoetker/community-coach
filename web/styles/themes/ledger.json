@@ -1,0 +1,16 @@
+{
+  "key": "ledger",
+  "name": "Ledger",
+  "archetype": "The professional practice",
+  "bestFor": ["Consultants and therapists", "Compliance and CPD training", "Data-heavy programmes"],
+  "defaultMode": "light",
+  "accent": { "l": 0.44, "c": 0.135, "h": 22 },
+  "neutral": { "h": 248, "c": 0.005 },
+  "fonts": {
+    "display": "IBM Plex Sans",
+    "body": "IBM Plex Sans",
+    "mono": "IBM Plex Mono"
+  },
+  "structure": { "radiusScale": 0.25, "density": 0.88, "typeRatio": 1.18, "elevation": "flat" },
+  "notes": "Separation by fill step and rule, never elevation. All metadata set in mono with tabular figures. Oxblood runs deliberately warm against cool grey."
+}

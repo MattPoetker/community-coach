@@ -1,0 +1,53 @@
+# One hostname, two upstreams. This is what lets the session cookie work everywhere with
+# no CORS and no token exchange — the browser only ever talks to one origin.
+{$APP_HOST} {
+	encode zstd gzip
+
+	# Rails: API, auth and websockets.
+	handle /api/* {
+		reverse_proxy api:3000
+	}
+	handle /auth/* {
+		reverse_proxy api:3000
+	}
+	handle /cable* {
+		reverse_proxy api:3000
+	}
+	handle /rails/* {
+		reverse_proxy api:3000
+	}
+	handle /up {
+		reverse_proxy api:3000
+	}
+
+	# Next.js: everything else.
+	handle {
+		reverse_proxy web:3000
+	}
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		X-Frame-Options "SAMEORIGIN"
+	}
+}
+
+# Custom community domains. On-demand TLS issues a certificate the first time a verified
+# domain is requested, which is what makes owner-supplied domains work without a redeploy.
+# The ask endpoint is what stops it being an open certificate mint for any hostname.
+{
+	on_demand_tls {
+		ask http://api:3000/api/v1/domains/verify
+	}
+}
+
+:443 {
+	tls {
+		on_demand
+	}
+	reverse_proxy web:3000
+	handle /api/* {
+		reverse_proxy api:3000
+	}
+}
