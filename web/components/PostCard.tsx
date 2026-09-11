@@ -1,5 +1,7 @@
+import Link from "next/link";
 import type { Post } from "@/lib/types";
 import { relativeTime } from "@/lib/format";
+import { ReactionButton } from "./ReactionButton";
 
 export function PostCard({ post }: { post: Post }) {
   return (
@@ -21,17 +23,20 @@ export function PostCard({ post }: { post: Post }) {
       </div>
 
       <div>
-        <h3 className="post__title">{post.title}</h3>
+        <h3 className="post__title">
+          <Link href={`/posts/${post.id}`} style={{ color: "inherit", textDecoration: "none" }}>
+            {post.title}
+          </Link>
+        </h3>
         <p className="post__body">{post.excerpt}</p>
       </div>
 
       <div className="post__footer">
-        <button className="post__action" type="button">
-          {post.reacted ? "▲" : "△"} {post.reactions_count}
-        </button>
-        <button className="post__action" type="button">
+        <ReactionButton type="Post" id={post.id} count={post.reactions_count}
+                        reacted={post.reacted} path="/" />
+        <Link className="post__action" href={`/posts/${post.id}`}>
           Reply · {post.comments_count}
-        </button>
+        </Link>
       </div>
     </article>
   );

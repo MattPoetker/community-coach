@@ -24,11 +24,15 @@ class Notification < ApplicationRecord
                .first
 
     if existing
+      # Already queued for delivery; incrementing is what turns ten likes into "10 people
+      # liked" rather than ten emails.
       existing.increment!(:group_count)
       existing.touch
       existing
     else
-      create!(user: user, kind: kind, actor: actor, subject: subject, data: data)
+      create!(user: user, kind: kind, actor: actor, subject: subject, data: data).tap do |record|
+        Notifications::DeliverJob.perform_later(record.id)
+      end
     end
   end
 end

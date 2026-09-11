@@ -2,32 +2,6 @@
 
 Four layers of tokens, one rule, and a lint that enforces it.
 
-## Directions and themes are different things
-
-This distinction is the one that matters, and getting it wrong is what produces six
-products that look identical.
-
-| | **Direction** | **Theme** |
-|---|---|---|
-| Owns | Layout, component anatomy, information model | Colour, type, spacing, radii |
-| Answers | *What is on the screen and how is it arranged?* | *What does it look like?* |
-| Ships as | Code — a stylesheet plus its layout components | Data — 14 values in `communities.branding` |
-| Changed by | A developer, in a PR | An owner, in admin settings, live |
-| Examples | Broadsheet, Console, Studio | Kiln, Hearth, Grove |
-
-Kiln, Hearth and Grove are three themes of **one** direction — same sidebar, same card feed,
-same right rail. Recolouring is all a theme can do, and that is correct: it is the layer an
-owner is trusted with.
-
-Dramatic variation lives one layer up. A direction can delete the card, replace the feed
-with a split pane, or lead with media instead of text — because it is code, reviewed like
-code. Crucially, a direction still consumes every Layer 2 token, so **every direction is
-still fully brandable**. Open any direction preview and use the brand editor: the layout
-holds, the palette and type move.
-
-Ship a direction when the *shape* of the product should change for a segment. Ship a theme
-when only its voice should.
-
 ## The one rule
 
 **Components read Layer 2 and Layer 3 only.**
@@ -54,18 +28,15 @@ the ramp derivation from three numbers.
 
 ```
 web/styles/
-├─ tokens.css          Layer 0 defaults, Layer 1 formulas, Layer 2/3 contract, dark mode
+├─ tokens.css          Layer 0 defaults, Layer 1 formulas, Layer 2/3 contract
 ├─ themes.css          the six presets — Layer 0 + structural personality only
-├─ components.css      the default direction's components, reading Layer 2/3 exclusively
-├─ themes/*.json       the presets as data, for seeding and the admin picker
-└─ directions/
-   ├─ broadsheet.css   a publication: masthead, asymmetric grid, no cards
-   ├─ console.css      a queue: split pane, one-line rows, keyboard-driven
-   └─ studio.css       a broadcast: full-bleed hero, horizontal rails, media-first
+├─ components.css      every component, reading Layer 2/3 exclusively
+└─ themes/*.json       the presets as data, for seeding and the admin picker
 ```
 
-A direction replaces `components.css` rather than extending it — different anatomy means a
-different component layer. It keeps `tokens.css`, which is what preserves branding.
+Three earlier structural explorations — Broadsheet, Console and Studio, each a different
+layout and information model rather than a different palette — are in the git history at
+`web/styles/directions/`. Kiln's app shell was chosen, so they are not in the build.
 
 ## Colour
 
@@ -80,20 +51,16 @@ brand colour reads as unconsidered; a grey with 0.005–0.04 chroma reads as par
 palette. `Ledger` deliberately breaks this, running a cool grey against a warm oxblood — the
 one place that theme raises its voice.
 
-## Dark mode
+## One palette
 
-Three viewer states, not two. An explicit choice stamps `data-mode="dark"` or
-`data-mode="light"` on `<html>`; the default system setting stamps nothing, and only
-`prefers-color-scheme` separates the two.
+The product ships light only. That is a product decision, not an omission: a token has
+exactly one value, a component has exactly one appearance, and there is no second palette
+to keep legible on every review. The three-state theme resolution that dark mode requires
+(explicit light, explicit dark, and an unstamped system default) is the single most common
+source of unreadable interfaces in themeable products, and none of it exists here.
 
-So each dark ramp is declared twice: once under
-`@media (prefers-color-scheme: dark) { :root:not([data-mode="light"]) }` and once under
-`:root[data-mode="dark"]`. The duplication is deliberate — it is what makes an explicit
-light choice beat a dark OS, and an explicit dark choice beat a light OS. Themes only
-restate the handful of values that differ, because the Layer 2 mappings are shared.
-
-Never style a component inside a media or `[data-mode]` block. Change the token; the
-component follows.
+If dark mode is ever wanted, it goes back in at the token layer — every component already
+reads tokens, so nothing below Layer 2 would need to change.
 
 ## Adding a component
 
@@ -144,7 +111,7 @@ warmth, more composure.
 
 | Preset | Archetype | Ground | Accent | Display / body | Structure |
 |---|---|---|---|---|---|
-| **Meridian** | High-ticket mastermind | Deep petrol, dark by default | Warm coral | Instrument Serif / Hanken Grotesk | Elevation by luminance, not shadow |
+| **Meridian** | High-ticket mastermind | Cool porcelain | Deep coral | Instrument Serif / Hanken Grotesk | Elevation by hairline, not shadow |
 | **Signal** | Performance coach | Cool near-white | Electric blue | Archivo / Schibsted Grotesk | 2px ink borders, square cards, round controls |
 | **Ledger** | Professional practice | Cool grey | Oxblood | IBM Plex Sans / IBM Plex Mono | Near-square, no elevation, mono metadata, dense |
 
@@ -152,17 +119,12 @@ warmth, more composure.
 
 ```bash
 python3 -m http.server 8919
-open http://127.0.0.1:8919/preview/index.html     # start here — all four directions
+open http://127.0.0.1:8919/preview/themes.html    # product screens, all six presets
+open http://127.0.0.1:8919/preview/landing.html   # public sales page
 ```
 
-| Preview | What it shows |
-|---|---|
-| `index.html` | The four directions, and what each is for |
-| `themes.html` | Kiln direction, product screens, all six themes switchable |
-| `landing.html` | Kiln direction, public sales page |
-| `broadsheet.html` | Broadsheet direction |
-| `console.html` | Console direction |
-| `studio.html` | Studio direction |
+The presets are also selectable by an owner in **Settings → Branding**, where they preview
+live before saving.
 
 Same markup and same content in every theme, so the comparison is like for like. The two
 pages share `preview/harness.{css,js}` — one switcher, rendered by the harness itself, so

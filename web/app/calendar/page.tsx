@@ -2,6 +2,7 @@ import { api, maybe } from "@/lib/api";
 import type { Community, EventOccurrence, Me } from "@/lib/types";
 import { TopBar } from "@/components/Shell";
 import { dayParts, formatEventTime } from "@/lib/format";
+import { RsvpButton } from "@/components/RsvpButton";
 
 export default async function CalendarPage() {
   const [{ community }, me, data] = await Promise.all([
@@ -42,16 +43,9 @@ export default async function CalendarPage() {
                       </div>
                     </div>
                     <div className="spacer" />
-                    {event.my_rsvp === "going" ? (
-                      <div className="row" style={{ gap: "var(--space-2)" }}>
-                        <span className="badge badge--success">Going</span>
-                        {event.location_url && (
-                          <a className="btn btn--primary" href={event.location_url}>Join call</a>
-                        )}
-                      </div>
-                    ) : (
-                      <button className="btn btn--secondary" type="button">RSVP</button>
-                    )}
+                    <RsvpButton occurrenceId={event.id} state={event.my_rsvp}
+                                goingCount={event.going_count}
+                                locationUrl={event.location_url} />
                   </div>
                 </article>
               );

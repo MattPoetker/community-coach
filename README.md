@@ -62,6 +62,9 @@ a missed tenant scope is a silent cross-community leak, not a loud error.
 `Access::Resolver` answers "does their plan and drip schedule include this lesson".
 Conflating them is how paywalls leak, so they are different objects with different tests.
 
+**One palette.** Light only, deliberately. A token has one value and a component has one
+appearance, so there is no second theme to keep legible on every change.
+
 ---
 
 ## Documentation

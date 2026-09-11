@@ -4,7 +4,6 @@
   "archetype": "The relational coach, more assured",
   "variationOf": "kiln",
   "bestFor": ["Coaching sold to businesses", "Consultant and agency cohorts", "Team programmes"],
-  "defaultMode": "light",
   "accent": { "l": 0.44, "c": 0.090, "h": 182 },
   "neutral": { "h": 95, "c": 0.009 },
   "fonts": { "display": "Epilogue", "body": "Figtree", "mono": "IBM Plex Mono" },

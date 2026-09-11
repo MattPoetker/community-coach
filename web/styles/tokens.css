@@ -7,6 +7,10 @@
 
    Layer 0  brand inputs      ~14 values an owner sets. Stored in
                               communities.branding jsonb.
+
+   Light only. The product ships one palette, so a token has exactly one value and a
+   component has exactly one appearance — no three-state theme resolution, no duplicated
+   ramp blocks, and no second palette to keep legible on every review.
    Layer 1  derived ramps     computed from Layer 0 by Branding::TokenCompiler.
    Layer 2  semantic tokens   the contract. What every component consumes.
    Layer 3  component tokens  per-component knobs a theme can retune without
@@ -209,107 +213,6 @@
   --meta-font:       var(--font-body);
   --meta-transform:  none;
   --meta-tracking:   var(--tracking-normal);
-}
-
-/* Dark mode, applied to the shared contract. Themes override the ramp values,
-   never the mappings below — so a theme only ever restates what differs. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-mode="light"]) {
-    --n-0:  oklch(0.155 var(--brand-neutral-c) var(--brand-neutral-h));
-    --n-1:  oklch(0.185 var(--brand-neutral-c) var(--brand-neutral-h));
-    --n-2:  oklch(0.215 var(--brand-neutral-c) var(--brand-neutral-h));
-    --n-3:  oklch(0.260 var(--brand-neutral-c) var(--brand-neutral-h));
-    --n-4:  oklch(0.310 var(--brand-neutral-c) var(--brand-neutral-h));
-    --n-5:  oklch(0.380 var(--brand-neutral-c) var(--brand-neutral-h));
-    --n-6:  oklch(0.460 var(--brand-neutral-c) var(--brand-neutral-h));
-    --n-7:  oklch(0.560 var(--brand-neutral-c) var(--brand-neutral-h));
-    --n-8:  oklch(0.650 var(--brand-neutral-c) var(--brand-neutral-h));
-    --n-9:  oklch(0.740 var(--brand-neutral-c) var(--brand-neutral-h));
-    --n-10: oklch(0.830 var(--brand-neutral-c) var(--brand-neutral-h));
-    --n-11: oklch(0.910 var(--brand-neutral-c) var(--brand-neutral-h));
-    --n-12: oklch(0.970 var(--brand-neutral-c) var(--brand-neutral-h));
-
-    --a-1: oklch(0.220 calc(var(--brand-accent-c) * 0.30) var(--brand-accent-h));
-    --a-2: oklch(0.270 calc(var(--brand-accent-c) * 0.45) var(--brand-accent-h));
-    --a-3: oklch(0.330 calc(var(--brand-accent-c) * 0.62) var(--brand-accent-h));
-    --a-4: oklch(0.420 calc(var(--brand-accent-c) * 0.80) var(--brand-accent-h));
-    --a-5: oklch(0.530 calc(var(--brand-accent-c) * 0.92) var(--brand-accent-h));
-    --a-6: oklch(calc(var(--brand-accent-l) + 0.08) var(--brand-accent-c) var(--brand-accent-h));
-    --a-7: oklch(calc(var(--brand-accent-l) + 0.15) calc(var(--brand-accent-c) * 0.92) var(--brand-accent-h));
-    --a-8: oklch(calc(var(--brand-accent-l) + 0.24) calc(var(--brand-accent-c) * 0.72) var(--brand-accent-h));
-    --a-9: oklch(calc(var(--brand-accent-l) + 0.34) calc(var(--brand-accent-c) * 0.50) var(--brand-accent-h));
-
-    --surface-canvas:  var(--n-0);
-    --surface-default: var(--n-1);
-    --surface-raised:  var(--n-2);
-    --surface-sunken:  var(--n-0);
-    --surface-inverse: var(--n-12);
-    --text-inverse:    var(--n-0);
-    --text-accent:     var(--a-8);
-    --text-link:       var(--a-8);
-
-    --success-surface: oklch(0.28 0.06 152);
-    --success-text:    oklch(0.82 0.13 152);
-    --warning-surface: oklch(0.30 0.06 75);
-    --warning-text:    oklch(0.86 0.13 85);
-    --danger-surface:  oklch(0.29 0.07 25);
-    --danger-text:     oklch(0.80 0.13 25);
-    --info-surface:    oklch(0.28 0.06 240);
-    --info-text:       oklch(0.82 0.11 240);
-
-    --shadow-2: 0 2px 10px -2px oklch(0 0 0 / 0.5);
-    --shadow-3: 0 16px 40px -10px oklch(0 0 0 / 0.62);
-  }
-}
-
-/* Explicit dark choice must also win over a light OS preference. The block is
-   generated from the same source as the media query above — see
-   docs/DESIGN_SYSTEM.md on why this duplication is deliberate. */
-:root[data-mode="dark"] {
-  --n-0:  oklch(0.155 var(--brand-neutral-c) var(--brand-neutral-h));
-  --n-1:  oklch(0.185 var(--brand-neutral-c) var(--brand-neutral-h));
-  --n-2:  oklch(0.215 var(--brand-neutral-c) var(--brand-neutral-h));
-  --n-3:  oklch(0.260 var(--brand-neutral-c) var(--brand-neutral-h));
-  --n-4:  oklch(0.310 var(--brand-neutral-c) var(--brand-neutral-h));
-  --n-5:  oklch(0.380 var(--brand-neutral-c) var(--brand-neutral-h));
-  --n-6:  oklch(0.460 var(--brand-neutral-c) var(--brand-neutral-h));
-  --n-7:  oklch(0.560 var(--brand-neutral-c) var(--brand-neutral-h));
-  --n-8:  oklch(0.650 var(--brand-neutral-c) var(--brand-neutral-h));
-  --n-9:  oklch(0.740 var(--brand-neutral-c) var(--brand-neutral-h));
-  --n-10: oklch(0.830 var(--brand-neutral-c) var(--brand-neutral-h));
-  --n-11: oklch(0.910 var(--brand-neutral-c) var(--brand-neutral-h));
-  --n-12: oklch(0.970 var(--brand-neutral-c) var(--brand-neutral-h));
-
-  --a-1: oklch(0.220 calc(var(--brand-accent-c) * 0.30) var(--brand-accent-h));
-  --a-2: oklch(0.270 calc(var(--brand-accent-c) * 0.45) var(--brand-accent-h));
-  --a-3: oklch(0.330 calc(var(--brand-accent-c) * 0.62) var(--brand-accent-h));
-  --a-4: oklch(0.420 calc(var(--brand-accent-c) * 0.80) var(--brand-accent-h));
-  --a-5: oklch(0.530 calc(var(--brand-accent-c) * 0.92) var(--brand-accent-h));
-  --a-6: oklch(calc(var(--brand-accent-l) + 0.08) var(--brand-accent-c) var(--brand-accent-h));
-  --a-7: oklch(calc(var(--brand-accent-l) + 0.15) calc(var(--brand-accent-c) * 0.92) var(--brand-accent-h));
-  --a-8: oklch(calc(var(--brand-accent-l) + 0.24) calc(var(--brand-accent-c) * 0.72) var(--brand-accent-h));
-  --a-9: oklch(calc(var(--brand-accent-l) + 0.34) calc(var(--brand-accent-c) * 0.50) var(--brand-accent-h));
-
-  --surface-canvas:  var(--n-0);
-  --surface-default: var(--n-1);
-  --surface-raised:  var(--n-2);
-  --surface-sunken:  var(--n-0);
-  --surface-inverse: var(--n-12);
-  --text-inverse:    var(--n-0);
-  --text-accent:     var(--a-8);
-  --text-link:       var(--a-8);
-
-  --success-surface: oklch(0.28 0.06 152);
-  --success-text:    oklch(0.82 0.13 152);
-  --warning-surface: oklch(0.30 0.06 75);
-  --warning-text:    oklch(0.86 0.13 85);
-  --danger-surface:  oklch(0.29 0.07 25);
-  --danger-text:     oklch(0.80 0.13 25);
-  --info-surface:    oklch(0.28 0.06 240);
-  --info-text:       oklch(0.82 0.11 240);
-
-  --shadow-2: 0 2px 10px -2px oklch(0 0 0 / 0.5);
-  --shadow-3: 0 16px 40px -10px oklch(0 0 0 / 0.62);
 }
 
 @media (prefers-reduced-motion: reduce) {

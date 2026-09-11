@@ -57,6 +57,36 @@ Rails.application.routes.draw do
       post "checkout" => "checkout#create"
       post "checkout/portal" => "checkout#portal"
 
+      resources :reports, only: %i[index create] do
+        member { post :resolve }
+      end
+
+      resources :invitations, only: %i[index create destroy]
+
+      resources :join_requests, only: %i[index create] do
+        member { post :review }
+      end
+
+      resources :notification_preferences, only: %i[index update]
+
+      namespace :admin do
+        resources :categories, only: %i[destroy] do
+          collection { post :reorder }
+        end
+        resources :courses, only: %i[index create update destroy] do
+          member { post :publish }
+        end
+        resources :lessons, only: %i[create update destroy] do
+          collection do
+            post :reorder
+            post :upload_url
+            post :uploaded
+          end
+        end
+        resources :events, only: %i[create update destroy]
+        resources :plans, only: %i[index create update destroy]
+      end
+
       post "webhooks/stripe" => "webhooks#stripe"
     end
   end

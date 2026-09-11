@@ -9,6 +9,10 @@ module Api
       skip_before_action :require_membership!, only: %i[show branding]
       skip_after_action :verify_authorized
 
+      # Declared as a before_action, not called inside the action: a rendered error does
+      # not halt a method, so an inline check would 403 and still run the update.
+      before_action :require_staff!, only: %i[update]
+
       # The public landing payload. A secret community is invisible to non-members; a
       # private one shows its sales page but not its content.
       def show
@@ -25,7 +29,6 @@ module Api
       end
 
       def update
-        require_staff!
         community = Current.community
         community.update!(community_params)
         AuditLog.record!(action: "community.update", actor: current_user, subject: community)

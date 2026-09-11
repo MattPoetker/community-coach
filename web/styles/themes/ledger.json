@@ -3,7 +3,6 @@
   "name": "Ledger",
   "archetype": "The professional practice",
   "bestFor": ["Consultants and therapists", "Compliance and CPD training", "Data-heavy programmes"],
-  "defaultMode": "light",
   "accent": { "l": 0.44, "c": 0.135, "h": 22 },
   "neutral": { "h": 248, "c": 0.005 },
   "fonts": {

@@ -24,7 +24,19 @@ export function TopBar({ community, me }: { community: Community; me: Me | null 
       </nav>
       <div className="spacer" />
       {me ? (
-        <span className="avatar avatar--sm" title={me.user.name}>{me.user.initials}</span>
+        <div className="row" style={{ gap: "var(--space-3)" }}>
+          <Link className="bell" href="/notifications" aria-label={
+            me.unread_notifications > 0
+              ? `${me.unread_notifications} unread notifications`
+              : "Notifications"
+          }>
+            <span aria-hidden="true" style={{ fontSize: "var(--text-md)" }}>◔</span>
+            {me.unread_notifications > 0 && (
+              <span className="bell__dot">{me.unread_notifications > 9 ? "9+" : me.unread_notifications}</span>
+            )}
+          </Link>
+          <span className="avatar avatar--sm" title={me.user.name}>{me.user.initials}</span>
+        </div>
       ) : (
         <Link className="btn btn--primary" href="/login">Sign in</Link>
       )}

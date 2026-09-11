@@ -12,7 +12,7 @@
     grove:    { accent: [0.44, 0.090, 182], neutral: [95, 0.009],  radius: 0.9,  density: 1.0,  ratio: 1.24, display: "Epilogue",            body: "Figtree",           mode: "light" },
     /* The other three directions, kept for reference. */
     meridian: { accent: [0.66, 0.145, 32],  neutral: [205, 0.038], radius: 0.75, density: 1.0,  ratio: 1.28, display: "Instrument Serif",    body: "Hanken Grotesk",    mode: "dark"  },
-    signal:   { accent: [0.55, 0.20, 252],  neutral: [254, 0.008], radius: 0.5,  density: 1.0,  ratio: 1.25, display: "Archivo",             body: "Schibsted Grotesk", mode: "light" },
+    signal:   { accent: [0.55, 0.20, 252],  neutral: [254, 0.008], radius: 0.5,  density: 1.0,  ratio: 1.25, display: "Archivo",             body: "Schibsted Grotesk" },
     ledger:   { accent: [0.44, 0.135, 22],  neutral: [248, 0.005], radius: 0.25, density: 0.88, ratio: 1.18, display: "IBM Plex Sans",       body: "IBM Plex Sans",     mode: "light" }
   };
 
@@ -67,21 +67,16 @@
      <div id="harness" data-page="…"> placeholder, so the switcher, the mode
      toggle and the brand editor cannot drift apart between them. */
   var PAGES = [
-    { key: "index", label: "All directions", href: "index.html" },
-    { key: "app", label: "Kiln · app", href: "themes.html" },
-    { key: "landing", label: "Kiln · landing", href: "landing.html" },
-    { key: "broadsheet", label: "Broadsheet", href: "broadsheet.html" },
-    { key: "console", label: "Console", href: "console.html" },
-    { key: "studio", label: "Studio", href: "studio.html" }
+    { key: "app", label: "Product", href: "themes.html" },
+    { key: "landing", label: "Landing page", href: "landing.html" }
   ];
 
   var GROUPS = [
-    { label: "Kiln family", keys: ["kiln", "hearth", "grove"] },
-    { label: "Other directions", keys: ["meridian", "signal", "ledger"] }
+    { label: "Presets", keys: ["kiln", "hearth", "grove", "meridian", "signal", "ledger"] }
   ];
 
   var LABELS = {
-    kiln:     ["Kiln", "Control"],
+    kiln:     ["Kiln", "Default"],
     hearth:   ["Hearth", "More literary"],
     grove:    ["Grove", "More assured"],
     meridian: ["Meridian", "High-ticket"],
@@ -111,11 +106,7 @@
     if (!mount) return;
     var page = mount.dataset.page;
 
-    /* Direction pages carry their own design language, so the theme chips do not
-       apply to them — but the brand editor still does, which is the point. */
-    var showChips = mount.dataset.chips !== "false";
-
-    var groups = !showChips ? "" : GROUPS.map(function (group) {
+    var groups = GROUPS.map(function (group) {
       var chips = group.keys.map(function (key) {
         var label = LABELS[key];
         return '<button class="hz-chip" data-theme-btn="' + key + '"' +
@@ -126,7 +117,6 @@
       return '<div class="hz-group"><span class="hz-group__label">' +
         esc(group.label) + "</span>" + chips + "</div>";
     }).join('<div class="hz-divider"></div>');
-    if (!showChips) groups = '<span class="hz-group__label">Direction · own layout, still brandable</span>';
 
     var pages = PAGES.map(function (p) {
       return '<a class="hz-btn" href="' + p.href + '"' +
@@ -145,7 +135,6 @@
         groups +
         '<div class="hz-spacer"></div>' +
         pages +
-        '<button class="hz-btn" id="mode-toggle" aria-pressed="false">Dark mode</button>' +
         '<button class="hz-btn" id="editor-toggle" aria-pressed="false" aria-controls="brand-editor">Brand editor</button>' +
       "</header>" +
       '<section class="hz-editor" id="brand-editor" hidden aria-label="Brand editor">' +
@@ -184,13 +173,6 @@
     document.getElementById("f-body").value = PRESETS[current].body;
   }
 
-  function setMode(mode) {
-    root.dataset.mode = mode;
-    var btn = document.getElementById("mode-toggle");
-    if (!btn) return;
-    btn.setAttribute("aria-pressed", String(mode === "dark"));
-    btn.textContent = mode === "dark" ? "Light mode" : "Dark mode";
-  }
 
   function setTheme(key) {
     current = key;
@@ -200,7 +182,6 @@
       btn.setAttribute("aria-pressed", String(btn.dataset.themeBtn === key));
     });
     clearOverrides();
-    setMode(PRESETS[key].mode);
     syncControls();
   }
 
@@ -208,12 +189,6 @@
     btn.addEventListener("click", function () { setTheme(btn.dataset.themeBtn); });
   });
 
-  var modeBtn = document.getElementById("mode-toggle");
-  if (modeBtn) {
-    modeBtn.addEventListener("click", function () {
-      setMode(root.dataset.mode === "dark" ? "light" : "dark");
-    });
-  }
 
   var editor = document.getElementById("brand-editor");
   var editorBtn = document.getElementById("editor-toggle");
@@ -253,12 +228,5 @@
     });
   }
 
-  var mountEl = document.querySelector("[data-chips]");
-  if (document.getElementById("mode-toggle") && root.dataset.direction) {
-    /* A direction owns its default mode; the harness only reflects and toggles it. */
-    setMode(root.dataset.mode || "light");
-    syncControls();
-  } else {
-    setTheme(current);
-  }
+  setTheme(current);
 })();

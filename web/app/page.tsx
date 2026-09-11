@@ -2,6 +2,7 @@ import { api, maybe } from "@/lib/api";
 import type { Category, Community, EventOccurrence, Me, Post } from "@/lib/types";
 import { TopBar, CategoryNav } from "@/components/Shell";
 import { PostCard } from "@/components/PostCard";
+import { Composer } from "@/components/Composer";
 import { dayParts } from "@/lib/format";
 import Link from "next/link";
 
@@ -34,18 +35,15 @@ export default async function FeedPage({
             <Link className="nav-item" href="/" aria-current="page">Community</Link>
             <Link className="nav-item" href="/classroom">Classroom</Link>
             <Link className="nav-item" href="/calendar">Calendar</Link>
+            <Link className="nav-item" href="/members">Members</Link>
+            {me.membership?.staff && <Link className="nav-item" href="/admin">Admin</Link>}
           </nav>
           <hr className="divider" style={{ margin: "var(--space-4) 0" }} />
           <CategoryNav categories={categories?.categories ?? []} activeSlug={category} />
         </aside>
 
         <main className="stack">
-          <div className="card">
-            <div className="row">
-              <span className="avatar" aria-hidden="true">{me.user.initials}</span>
-              <input className="input" id="composer" placeholder="Share a win, or ask the room something…" />
-            </div>
-          </div>
+          <Composer categories={categories?.categories ?? []} initials={me.user.initials} />
 
           {posts.length === 0 ? (
             <div className="card empty">

@@ -30,6 +30,9 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
     headers: {
       "Content-Type": "application/json",
       Cookie: cookieStore.toString(),
+      // Server-side calls carry no Origin, so this header is what satisfies the API's
+      // CSRF check. A browser will not attach it cross-site without a preflight.
+      "X-Requested-With": "CommunityCoach",
       // Development resolves the tenant by header; production resolves it from the host.
       "X-Community-Slug": process.env.COMMUNITY_SLUG || "momentum",
       "X-Forwarded-Host": headerStore.get("host") || "",
@@ -61,6 +64,11 @@ export const api = {
   get: <T>(path: string) => request<T>(path),
   post: <T>(path: string, body?: unknown) =>
     request<T>(path, { method: "POST", body: body ? JSON.stringify(body) : undefined }),
+  put: <T>(path: string, body?: unknown) =>
+    request<T>(path, { method: "PUT", body: body ? JSON.stringify(body) : undefined }),
+  patch: <T>(path: string, body?: unknown) =>
+    request<T>(path, { method: "PATCH", body: body ? JSON.stringify(body) : undefined }),
+  delete: <T>(path: string) => request<T>(path, { method: "DELETE" }),
 };
 
 /** Returns null instead of throwing, for surfaces that render for signed-out visitors. */

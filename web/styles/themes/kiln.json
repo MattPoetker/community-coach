@@ -3,7 +3,6 @@
   "name": "Kiln",
   "archetype": "The relational coach",
   "bestFor": ["Life and career coaching", "Creative cohorts", "Small high-trust groups"],
-  "defaultMode": "light",
   "accent": { "l": 0.46, "c": 0.098, "h": 156 },
   "neutral": { "h": 74, "c": 0.016 },
   "fonts": {

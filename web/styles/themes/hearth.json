@@ -4,7 +4,6 @@
   "archetype": "The relational coach, more literary",
   "variationOf": "kiln",
   "bestFor": ["Writing-led programmes", "Newsletter-native coaches", "Long reflective lessons"],
-  "defaultMode": "light",
   "accent": { "l": 0.47, "c": 0.086, "h": 28 },
   "neutral": { "h": 58, "c": 0.021 },
   "fonts": { "display": "Newsreader", "body": "Karla", "mono": "IBM Plex Mono" },

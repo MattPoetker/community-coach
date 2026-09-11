@@ -3,7 +3,6 @@
   "name": "Signal",
   "archetype": "The performance coach",
   "bestFor": ["Fitness and sport", "Sales floors", "Anything with a scoreboard"],
-  "defaultMode": "light",
   "accent": { "l": 0.55, "c": 0.20, "h": 252 },
   "neutral": { "h": 254, "c": 0.008 },
   "fonts": {

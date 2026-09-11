@@ -12,7 +12,6 @@
    Presets are named for the customer archetype they serve, not for a colour.
    ========================================================================== */
 
-
 /* ─────────────────────────────────────────────────────────────────────────
    KILN — the relational coach
    Life, career and creative coaches. Small cohorts, high trust, long
@@ -53,34 +52,19 @@
   --rail-width: 3px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root[data-theme="kiln"]:not([data-mode="light"]) {
-    --brand-neutral-c: 0.012;
-    --brand-accent-l: 0.56;
-    --card-border: var(--border-width) solid var(--n-3);
-  }
-}
-:root[data-theme="kiln"][data-mode="dark"] {
-  --brand-neutral-c: 0.012;
-  --brand-accent-l: 0.56;
-  --card-border: var(--border-width) solid var(--n-3);
-}
-
-
 /* ─────────────────────────────────────────────────────────────────────────
    MERIDIAN — the high-ticket mastermind
-   $10k+ cohorts, invite-only rooms, executive programmes. Dark by default:
-   a deep petrol ground carrying real chroma, not a neutral near-black, lit by
-   a warm coral that sits opposite it on the wheel. Elevation is luminance —
-   surfaces get lighter as they rise, the way a stage does — so there is almost
-   no shadow anywhere. High-contrast serif display against a quiet grotesque.
+   $10k+ cohorts, invite-only rooms, executive programmes. A cool porcelain
+   ground with a deep coral accent, and elevation carried by hairlines rather
+   than shadow, so the surface stays flat and composed. High-contrast serif
+   display against a quiet grotesque.
    ───────────────────────────────────────────────────────────────────────── */
 [data-theme="meridian"] {
-  --brand-accent-l: 0.66;
-  --brand-accent-c: 0.145;
+  --brand-accent-l: 0.52;
+  --brand-accent-c: 0.155;
   --brand-accent-h: 32;
   --brand-neutral-h: 205;
-  --brand-neutral-c: 0.038;
+  --brand-neutral-c: 0.012;
   --brand-font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
   --brand-font-body: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
   --brand-font-mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -111,12 +95,6 @@
 
 /* Meridian's light mode is a real design, not an inversion: the petrol ground
    becomes a cool porcelain and the coral darkens to hold contrast on it. */
-:root[data-theme="meridian"][data-mode="light"] {
-  --brand-accent-l: 0.52;
-  --brand-accent-c: 0.155;
-  --brand-neutral-c: 0.012;
-}
-
 
 /* ─────────────────────────────────────────────────────────────────────────
    SIGNAL — the performance coach
@@ -167,22 +145,6 @@
   --meta-tracking: 0.04em;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root[data-theme="signal"]:not([data-mode="light"]) {
-    --border-subtle: var(--n-4);
-    --border-default: var(--n-8);
-    --card-border: var(--border-width) solid var(--n-4);
-    --shadow-3: 6px 6px 0 var(--a-6);
-  }
-}
-:root[data-theme="signal"][data-mode="dark"] {
-  --border-subtle: var(--n-4);
-  --border-default: var(--n-8);
-  --card-border: var(--border-width) solid var(--n-4);
-  --shadow-3: 6px 6px 0 var(--a-6);
-}
-
-
 /* ─────────────────────────────────────────────────────────────────────────
    LEDGER — the professional practice
    Consultants, therapists, accountants, compliance training. Sober and dense.
@@ -229,25 +191,12 @@
   --meta-tracking: 0.02em;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root[data-theme="ledger"]:not([data-mode="light"]) {
-    --surface-canvas: var(--n-0);
-    --brand-accent-l: 0.52;
-  }
-}
-:root[data-theme="ledger"][data-mode="dark"] {
-  --surface-canvas: var(--n-0);
-  --brand-accent-l: 0.52;
-}
-
-
 /* ═══════════════════════════════════════════════════════════════════════════
    KILN VARIATIONS
    Kiln is the control. These two hold its warmth and its relational tone, and
    move on the axes a client can actually articulate: how literary it feels,
    and how much it asserts itself.
    ═══════════════════════════════════════════════════════════════════════════ */
-
 
 /* ─────────────────────────────────────────────────────────────────────────
    HEARTH — Kiln, more literary
@@ -296,22 +245,6 @@
   --rail-width: 2px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root[data-theme="hearth"]:not([data-mode="light"]) {
-    --brand-neutral-c: 0.014;
-    --brand-accent-l: 0.60;
-    --surface-canvas: var(--n-0);
-    --card-border: var(--border-width) solid var(--n-3);
-  }
-}
-:root[data-theme="hearth"][data-mode="dark"] {
-  --brand-neutral-c: 0.014;
-  --brand-accent-l: 0.60;
-  --surface-canvas: var(--n-0);
-  --card-border: var(--border-width) solid var(--n-3);
-}
-
-
 /* ─────────────────────────────────────────────────────────────────────────
    GROVE — Kiln, more assured
    For coaches selling to businesses rather than individuals: the same warmth,
@@ -356,22 +289,3 @@
   --meta-tracking: 0.05em;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root[data-theme="grove"]:not([data-mode="light"]) {
-    --brand-accent-l: 0.56;
-    --card-border: var(--border-width) solid var(--n-3);
-  }
-}
-:root[data-theme="grove"][data-mode="dark"] {
-  --brand-accent-l: 0.56;
-  --card-border: var(--border-width) solid var(--n-3);
-}
-
-
-/* Meridian's coral resolves its contrast colour to near-black, so the scrim
-   lightens rather than darkens. In production Branding::TokenCompiler emits this
-   automatically from the same decision that picked the contrast colour; it is
-   restated here because the static preview has no compiler in front of it. */
-[data-theme="meridian"] {
-  --media-scrim: oklch(0.97 0.01 32 / 0.78);
-}

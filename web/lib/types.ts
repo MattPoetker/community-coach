@@ -12,6 +12,9 @@ export type Post = {
   reactions_count: number;
   reacted: boolean;
   last_activity_at: string;
+  created_at: string;
+  edited_at: string | null;
+  body: unknown;
   user: User;
   category: Category;
 };
@@ -69,6 +72,9 @@ export type Community = {
   name: string;
   tagline: string | null;
   description: string | null;
+  privacy: "public" | "private" | "secret";
+  currency: string;
+  timezone: string;
   branding: Record<string, unknown>;
   member_count: number;
   viewer: { member: boolean; role?: string; staff?: boolean; plan_slug?: string | null };
@@ -78,4 +84,69 @@ export type Me = {
   user: User;
   membership: { id: number; role: string; status: string; staff: boolean } | null;
   unread_notifications: number;
+};
+
+export type Comment = {
+  id: number;
+  body: unknown;
+  deleted: boolean;
+  depth: number;
+  parent_id: number | null;
+  path: string;
+  reactions_count: number;
+  created_at: string;
+  edited_at: string | null;
+  user: User;
+};
+
+export type Notification = {
+  id: number;
+  kind: string;
+  data: Record<string, unknown>;
+  group_count: number;
+  read: boolean;
+  created_at: string;
+  subject_type: string | null;
+  subject_id: number | null;
+  actor: User | null;
+};
+
+export type Member = {
+  id: number;
+  role: string;
+  status: string;
+  joined_at: string | null;
+  staff: boolean;
+  plan_slug: string | null;
+  user: User;
+};
+
+export type Report = {
+  id: number;
+  reason: string;
+  detail: string | null;
+  state: string;
+  created_at: string;
+  subject_type: string;
+  subject_id: number;
+  subject_title: string | null;
+  reporter: User;
+};
+
+export type Invitation = {
+  id: number;
+  email_address: string;
+  role: string;
+  expires_at: string;
+  created_at: string;
+  accepted: boolean;
+  invited_by: User;
+};
+
+export type JoinRequest = {
+  id: number;
+  answers: Record<string, string>;
+  state: string;
+  created_at: string;
+  user: User;
 };

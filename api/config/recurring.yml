@@ -1,15 +1,16 @@
-# examples:
-#   periodic_cleanup:
-#     class: CleanSoftDeletedRecordsJob
-#     queue: background
-#     args: [ 1000, { batch_size: 500 } ]
-#     schedule: every hour
-#   periodic_cleanup_with_command:
-#     command: "SoftDeletedRecord.due.delete_all"
-#     priority: 2
-#     schedule: at 5am every day
+# Solid Queue recurring tasks. These are the jobs that make the product feel alive rather
+# than a place you have to remember to visit.
+production: &tasks
+  event_reminders:
+    class: Calendar::ReminderJob
+    schedule: every 5 minutes
 
-production:
-  clear_solid_queue_finished_jobs:
-    command: "SolidQueue::Job.clear_finished_in_batches(sleep_between_batches: 0.3)"
-    schedule: every hour at minute 12
+  materialise_occurrences:
+    class: Calendar::RollHorizonJob
+    schedule: every day at 3am
+
+  daily_digests:
+    class: Notifications::DailyDigestJob
+    schedule: every day at 8am
+
+development: *tasks
