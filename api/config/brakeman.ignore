@@ -1,0 +1,13 @@
+{
+  "ignored_warnings": [
+    {
+      "fingerprint": "20694d771690a91101473a671f17fbe96d845294d6eddfb5b6315926c267cabf",
+      "note": "False positive. The WHERE clause uses a bind parameter; the only interpolated fragment is the ranking expression in SELECT, which ActiveRecord does not bind-substitute. That fragment is built by ranked_tsquery via ActiveRecord::Base.sanitize_sql_array, and the decay expression contains no user input at all. Reviewed 2026-09-12. If you change Search::Query, re-check this rather than re-ignoring it."
+    },
+    {
+      "fingerprint": "b81bc79d95ba6c42f852f446138a102f4c3d29531acbcbf219df25e97ab01127",
+      "note": "False positive. system() is called with an argument array, not a command string, so no shell is involved and no argument can break out into one. The interpolated values come from Video::Providers::Local::LADDER, a frozen constant of integers and bitrate literals, never from user input. The two paths are derived from our own storage keys. Reviewed 2026-09-12."
+    }
+  ],
+  "brakeman_version": "7.1.1"
+}

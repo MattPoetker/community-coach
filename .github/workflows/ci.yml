@@ -24,13 +24,15 @@ jobs:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/community_coach_test
     defaults: { run: { working-directory: api } }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ruby/setup-ruby@v1
         with: { bundler-cache: true, working-directory: api }
       - run: bin/rails db:test:prepare
       - run: bundle exec rspec
       - name: Brakeman
-        run: bundle exec brakeman --no-pager --quiet
+        # The ignore file carries a written justification per entry; both current entries
+        # are false positives that would need worse code to silence any other way.
+        run: bundle exec brakeman --no-pager --quiet -i config/brakeman.ignore
       - name: Dependency audit
         run: bundle exec bundler-audit check --update
 
@@ -39,8 +41,8 @@ jobs:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: web } }
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version: 22, cache: npm, cache-dependency-path: web/package-lock.json }
       - run: npm ci
       # The rule the whole whitelabel guarantee rests on: components read tokens only.

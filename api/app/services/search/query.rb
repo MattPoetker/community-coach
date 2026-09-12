@@ -23,10 +23,13 @@ module Search
 
     private
 
-    # `select` performs no bind substitution, so the query is sanitised once here and the
-    # resulting literal is reused in both the filter and the ranking expression.
-    def tsquery
-      @tsquery ||= ActiveRecord::Base.sanitize_sql_array(
+    MATCH = "search_vector @@ websearch_to_tsquery('english', ?)"
+
+    # `select` performs no bind substitution, so the ranking expression needs a sanitised
+    # literal. The filter does support binds, and uses one — there is no reason to hand
+    # Brakeman something that looks like interpolated SQL when a bind will do.
+    def ranked_tsquery
+      @ranked_tsquery ||= ActiveRecord::Base.sanitize_sql_array(
         ["websearch_to_tsquery('english', ?)", @term]
       )
     end
@@ -34,8 +37,8 @@ module Search
     def posts
       Post.kept
           .where(community: @community)
-          .where("search_vector @@ #{tsquery}")
-          .select("posts.*, ts_rank_cd(search_vector, #{tsquery}) * #{decay} AS rank")
+          .where(MATCH, @term)
+          .select("posts.*, ts_rank_cd(search_vector, #{ranked_tsquery}) * #{decay} AS rank")
           .reorder(Arel.sql("rank DESC"))
           .limit(@limit)
           .includes(:user, :category)
@@ -44,7 +47,7 @@ module Search
     def lessons
       Lesson.published
             .where(community: @community)
-            .where("search_vector @@ #{tsquery}")
+            .where(MATCH, @term)
             .limit(@limit)
             .includes(course_module: :course)
     end

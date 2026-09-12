@@ -20,7 +20,7 @@ module Api
         end
 
         request = JoinRequest.find_or_initialize_by(user: current_user, community: Current.community)
-        request.answers = params.fetch(:answers, {}).permit!.to_h
+        request.answers = bounded_answers
         request.state = "pending"
         request.save!
 
@@ -44,6 +44,23 @@ module Api
         AuditLog.record!(action: "join_request.#{join_request.state}", actor: current_user,
                          subject: join_request)
         render json: { join_request: JoinRequestSerializer.new(join_request).as_json }
+      end
+
+      private
+
+      MAX_ANSWERS = 10
+      MAX_ANSWER_LENGTH = 2_000
+
+      # The application questions are owner-defined, so the keys cannot be enumerated in a
+      # strong-params list. "We do not know the keys" is not a reason to accept any shape
+      # or any size into a jsonb column, though — flat string pairs, bounded both ways.
+      def bounded_answers
+        raw = params[:answers]
+        return {} if raw.blank?
+
+        raw.to_unsafe_h
+           .first(MAX_ANSWERS)
+           .to_h { |key, value| [key.to_s.first(120), value.to_s.first(MAX_ANSWER_LENGTH)] }
       end
     end
   end
