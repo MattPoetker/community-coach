@@ -98,7 +98,15 @@ keep their hue; their members keep a legible button.
 
 ---
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Three rules are enforced by tests rather than
+review — tenant scoping, the token contract, and authorization that halts rather than
+renders — because each one fails silently when broken.
+
+Security reports go through [SECURITY.md](SECURITY.md), not public issues.
+
 ## Licence
 
-AGPL-3.0. Self-host it, modify it, run it for your own communities freely. The copyleft is
-there so a hosted fork cannot take the work without contributing back.
+[AGPL-3.0](LICENSE). Self-host it, modify it, run it for your own communities freely. The
+copyleft is there so a hosted fork cannot take the work without contributing back.

@@ -4,6 +4,20 @@
 # product does, so `bin/setup` seeds a community that looks like a real one.
 #
 # Idempotent: safe to re-run.
+#
+# These accounts share one published password. That is fine for a laptop and a disaster on
+# a public host, so seeding refuses to run in production unless you insist — a self-hoster
+# who runs `rails db:seed` by reflex should not end up with five known logins.
+if Rails.env.production? && ENV["SEED_DEMO_DATA"] != "i-understand-these-are-public-logins"
+  abort <<~MESSAGE
+    Refusing to seed demo data in production.
+
+    These seeds create accounts with a password published in the README. If you genuinely
+    want them on a production host — a demo instance, say — re-run with:
+
+      SEED_DEMO_DATA=i-understand-these-are-public-logins bin/rails db:seed
+  MESSAGE
+end
 
 ActsAsTenant.without_tenant do
   community = Community.find_or_create_by!(slug: "momentum") do |c|
